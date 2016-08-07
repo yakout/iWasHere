@@ -13,6 +13,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         print("testing git")
+        print("testing git yakout branch")
         // Do any additional setup after loading the view, typically from a nib.
     }
 
