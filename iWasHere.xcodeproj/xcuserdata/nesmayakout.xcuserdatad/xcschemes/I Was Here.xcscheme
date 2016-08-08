@@ -17,7 +17,7 @@
                BlueprintIdentifier = "6316F0141D5768C000A2F2FA"
                BuildableName = "I Was Here.app"
                BlueprintName = "I Was Here"
-               ReferencedContainer = "container:I Was Here.xcodeproj">
+               ReferencedContainer = "container:iWasHere.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,7 +35,7 @@
             BlueprintIdentifier = "6316F0141D5768C000A2F2FA"
             BuildableName = "I Was Here.app"
             BlueprintName = "I Was Here"
-            ReferencedContainer = "container:I Was Here.xcodeproj">
+            ReferencedContainer = "container:iWasHere.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -58,7 +58,7 @@
             BlueprintIdentifier = "6316F0141D5768C000A2F2FA"
             BuildableName = "I Was Here.app"
             BlueprintName = "I Was Here"
-            ReferencedContainer = "container:I Was Here.xcodeproj">
+            ReferencedContainer = "container:iWasHere.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -77,7 +77,7 @@
             BlueprintIdentifier = "6316F0141D5768C000A2F2FA"
             BuildableName = "I Was Here.app"
             BlueprintName = "I Was Here"
-            ReferencedContainer = "container:I Was Here.xcodeproj">
+            ReferencedContainer = "container:iWasHere.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
