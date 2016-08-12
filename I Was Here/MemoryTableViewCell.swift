@@ -10,8 +10,30 @@ import UIKit
 
 class MemoryTableViewCell: UITableViewCell {
     
+    // MARK: - Outlets
     
-    // here you drag the custom cell items
+    @IBOutlet weak var memoryDescription: UILabel!
+    @IBOutlet weak var username: UILabel!
+    @IBOutlet weak var memoryImage: UIImageView!
+    
+    
+    
+    
+    // MARK: - Actions
+    
+    @IBAction func instagramShare(sender: AnyObject) {
+        print("posted on instagram")
+    }
+    @IBAction func facebookShare(sender: UIButton) {
+        print("posted on facebook")
+    }
+    @IBAction func tweet(sender: UIButton) {
+        print("tweet sent")
+    }
+    
+    
+    
+    
     
     
     
