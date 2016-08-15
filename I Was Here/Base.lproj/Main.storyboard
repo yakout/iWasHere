@@ -146,7 +146,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
                                         <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" alignment="top" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="pPD-cT-QAZ">
-                                            <rect key="frame" x="19" y="8" width="524" height="370"/>
+                                            <rect key="frame" x="19" y="8" width="444" height="210"/>
                                             <subviews>
                                                 <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="Ekm-xc-H8o">
                                                     <rect key="frame" x="0.0" y="0.0" width="261" height="210"/>
@@ -163,33 +163,33 @@
                                                     </subviews>
                                                 </stackView>
                                                 <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" axis="vertical" distribution="fillEqually" spacing="114" translatesAutoresizingMaskIntoConstraints="NO" id="ywc-aD-DoU">
-                                                    <rect key="frame" x="276" y="0.0" width="248" height="370"/>
+                                                    <rect key="frame" x="276" y="0.0" width="168" height="210"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="300" verticalHuggingPriority="251" ambiguous="YES" misplaced="YES" text="Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t4M-J1-CLB">
-                                                            <rect key="frame" x="0.0" y="0.0" width="248" height="128"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="300" verticalHuggingPriority="251" ambiguous="YES" text="Description" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t4M-J1-CLB">
+                                                            <rect key="frame" x="0.0" y="0.0" width="168" height="48"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" distribution="equalSpacing" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="bKU-FK-DTu">
-                                                            <rect key="frame" x="0.0" y="242" width="248" height="128"/>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" ambiguous="YES" distribution="equalSpacing" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="bKU-FK-DTu">
+                                                            <rect key="frame" x="0.0" y="162" width="168" height="48"/>
                                                             <subviews>
-                                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vYv-Et-7r1">
-                                                                    <rect key="frame" x="0.0" y="0.0" width="128" height="128"/>
+                                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vYv-Et-7r1">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="48" height="48"/>
                                                                     <state key="normal" image="instagram"/>
                                                                     <connections>
                                                                         <action selector="instagramShare:" destination="YdM-Hq-gKe" eventType="touchUpInside" id="AP4-74-ida"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HPr-yD-2h6">
-                                                                    <rect key="frame" x="140" y="0.0" width="48" height="128"/>
+                                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HPr-yD-2h6">
+                                                                    <rect key="frame" x="60" y="0.0" width="48" height="48"/>
                                                                     <state key="normal" image="facebook"/>
                                                                     <connections>
                                                                         <action selector="facebookShare:" destination="YdM-Hq-gKe" eventType="touchUpInside" id="U21-iI-R8L"/>
                                                                     </connections>
                                                                 </button>
-                                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FnV-oh-SVk">
-                                                                    <rect key="frame" x="200" y="0.0" width="48" height="128"/>
+                                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FnV-oh-SVk">
+                                                                    <rect key="frame" x="120" y="0.0" width="48" height="48"/>
                                                                     <state key="normal" image="twitter"/>
                                                                     <connections>
                                                                         <action selector="tweet:" destination="YdM-Hq-gKe" eventType="touchUpInside" id="a5Y-Yz-Mbq"/>
