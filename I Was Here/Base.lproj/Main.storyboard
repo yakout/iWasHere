@@ -132,7 +132,7 @@
         <!--Wall-->
         <scene sceneID="jk9-p6-llP">
             <objects>
-                <tableViewController title="Wall" id="Hi0-Bd-OeK" customClass="WallTableViewController" customModule="I_Was_Here" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Wall" id="Hi0-Bd-OeK" customClass="WallTableViewController_Merge" customModule="I_Was_Here" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="252" sectionHeaderHeight="22" sectionFooterHeight="22" id="Mm7-3g-UBz">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -256,16 +256,23 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="175"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="e1U-dq-kd9">
+                                        <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="e1U-dq-kd9">
                                             <rect key="frame" x="8" y="8" width="584" height="159"/>
                                             <subviews>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="NPg-zh-MYA">
+                                                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="NPg-zh-MYA">
                                                     <rect key="frame" x="0.0" y="0.0" width="195" height="159"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="LCN-JM-UEi">
+                                                        <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FBH-bT-Zc1">
                                                             <rect key="frame" x="0.0" y="0.0" width="195" height="138"/>
-                                                        </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXc-qq-gjk">
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="138" id="Q7a-Bs-xih"/>
+                                                            </constraints>
+                                                            <state key="normal" title=" "/>
+                                                            <connections>
+                                                                <action selector="clickedFolder1:" destination="M7R-K6-UJ5" eventType="touchUpInside" id="fjr-1x-u4L"/>
+                                                            </connections>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="NXc-qq-gjk">
                                                             <rect key="frame" x="0.0" y="138" width="195" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -273,13 +280,20 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="eV7-XL-UQu">
+                                                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="eV7-XL-UQu">
                                                     <rect key="frame" x="195" y="0.0" width="194" height="159"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tcn-dZ-OP6">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hsT-hC-Bcm">
                                                             <rect key="frame" x="0.0" y="0.0" width="194" height="138"/>
-                                                        </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cr-28-C8c">
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="138" id="tUg-9f-GgV"/>
+                                                            </constraints>
+                                                            <state key="normal" title=" "/>
+                                                            <connections>
+                                                                <action selector="clickedFolder2:" destination="M7R-K6-UJ5" eventType="touchUpInside" id="tSa-jI-UN2"/>
+                                                            </connections>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2cr-28-C8c">
                                                             <rect key="frame" x="0.0" y="138" width="194" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -287,13 +301,20 @@
                                                         </label>
                                                     </subviews>
                                                 </stackView>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="u70-WT-YBW">
+                                                <stackView opaque="NO" contentMode="scaleToFill" misplaced="YES" axis="vertical" distribution="fillProportionally" translatesAutoresizingMaskIntoConstraints="NO" id="u70-WT-YBW">
                                                     <rect key="frame" x="389" y="0.0" width="195" height="159"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="h52-iU-HCY">
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ld-Pk-gJu">
                                                             <rect key="frame" x="0.0" y="0.0" width="195" height="138"/>
-                                                        </imageView>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6BR-J4-Cpq">
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="138" id="rhM-pR-BPh"/>
+                                                            </constraints>
+                                                            <state key="normal" title=" "/>
+                                                            <connections>
+                                                                <action selector="clickedFolder3:" destination="M7R-K6-UJ5" eventType="touchUpInside" id="bYi-qp-AaA"/>
+                                                            </connections>
+                                                        </button>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6BR-J4-Cpq">
                                                             <rect key="frame" x="0.0" y="138" width="195" height="21"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -312,9 +333,9 @@
                                     </constraints>
                                 </tableViewCellContentView>
                                 <connections>
-                                    <outlet property="folderImage1" destination="LCN-JM-UEi" id="dXD-RW-T5F"/>
-                                    <outlet property="folderImage2" destination="tcn-dZ-OP6" id="y79-ip-idX"/>
-                                    <outlet property="folderImage3" destination="h52-iU-HCY" id="DE1-lv-kUp"/>
+                                    <outlet property="folder1" destination="FBH-bT-Zc1" id="PNG-Mk-otW"/>
+                                    <outlet property="folder2" destination="hsT-hC-Bcm" id="dfU-gI-pQr"/>
+                                    <outlet property="folder3" destination="0Ld-Pk-gJu" id="nVF-S9-RgH"/>
                                     <outlet property="folderName1" destination="NXc-qq-gjk" id="IuF-H1-B5Z"/>
                                     <outlet property="folderName2" destination="2cr-28-C8c" id="sPf-dG-Bra"/>
                                     <outlet property="folderName3" destination="6BR-J4-Cpq" id="ZC8-ZR-S0l"/>

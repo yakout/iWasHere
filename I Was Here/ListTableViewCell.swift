@@ -8,7 +8,7 @@
 
 import UIKit
 protocol ListTableViewCellDelegate {
-    func userDidSelectCell(cell: ListTableViewCell)
+    func userDidSelectListCell(cell: ListTableViewCell)
 }
 class ListTableViewCell: UITableViewCell {
     // MARK: - Properties
@@ -24,7 +24,7 @@ class ListTableViewCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        self.delegate?.userDidSelectCell(self)
+        self.delegate?.userDidSelectListCell(self)
         // Configure the view for the selected state
     }
 
