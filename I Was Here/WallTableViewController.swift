@@ -42,7 +42,8 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
             performSelector(#selector(didLogoutWithSuccess), withObject: nil, afterDelay: 0)
         } else {
             let auth = FIRAuth.auth()?.currentUser
-            self.user = User(authData: auth!)
+            self.user = User.getUser()
+            user.setData(auth!)
         }
     }
     

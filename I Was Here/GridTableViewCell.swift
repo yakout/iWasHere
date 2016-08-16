@@ -8,17 +8,17 @@
 
 import UIKit
 protocol GridTableViewCellDelegate {
-    func userDidSelectCell(cell: GridTableViewCell)
+    func userDidSelectGridCell(cell: GridTableViewCell, whichImage: Int)
 }
 class GridTableViewCell: UITableViewCell {
     // MARK: - Properties
     var delegate: GridTableViewCellDelegate?
-    @IBOutlet weak var folderImage1: UIImageView!
     @IBOutlet weak var folderName1: UILabel!
-    @IBOutlet weak var folderImage2: UIImageView!
     @IBOutlet weak var folderName2: UILabel!
-    @IBOutlet weak var folderImage3: UIImageView!
     @IBOutlet weak var folderName3: UILabel!
+    @IBOutlet weak var folder1: UIButton!
+    @IBOutlet weak var folder2: UIButton!
+    @IBOutlet weak var folder3: UIButton!
    
     // MARK: - Actions
     override func awakeFromNib() {
@@ -28,8 +28,20 @@ class GridTableViewCell: UITableViewCell {
 
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        self.delegate?.userDidSelectCell(self)
         // Configure the view for the selected state
     }
-
+    func setFolderImages(image1: UIImage?, image2: UIImage?, image3: UIImage?) {
+        folder1.imageView?.image = image1
+        folder2.imageView?.image = image2
+        folder3.imageView?.image = image3
+    }
+    @IBAction func clickedFolder1(sender: UIButton) {
+        self.delegate?.userDidSelectGridCell(self, whichImage: 0)
+    }
+    @IBAction func clickedFolder2(sender: UIButton) {
+        self.delegate?.userDidSelectGridCell(self, whichImage: 1)
+    }
+    @IBAction func clickedFolder3(sender: UIButton) {
+        self.delegate?.userDidSelectGridCell(self, whichImage: 2)
+    }
 }
