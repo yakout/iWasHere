@@ -9,4 +9,21 @@
 import Foundation
 
 
-//  TODO: place model 
+class Place {
+    private var name: String
+    private var memories: [Memory]
+    
+    init(name: String, memories: [Memory]) {
+        self.name = name
+        self.memories = memories
+    }
+    
+    func getPlaceName() -> String {
+        return self.name
+    }
+    
+    func getPlaceMemories() -> [Memory] {
+        return self.memories
+    }
+    
+}

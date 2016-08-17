@@ -27,6 +27,7 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         if let uid = FIRAuth.auth()?.currentUser?.uid {
             print("User is signed in with uid:", uid)
+            User.user = User(authData: (FIRAuth.auth()?.currentUser)!)
             self.performSegueWithIdentifier(self.loginToWall, sender: nil)
         }
     }

@@ -11,17 +11,17 @@ import Firebase
 
 class WallTableViewController_Merge: UITableViewController, ListTableViewCellDelegate, GridTableViewCellDelegate {
     //MARK: - Properties
-    var user = User.getUser()
+    var user = User.getUser()!
     var isList: Bool!
     
     override func viewDidLoad() {
-        user.loadMemories()
-        isList = user.getViewMode()
+        // user.loadMemories()
+        // isList = user.getViewMode()
         if FIRAuth.auth()?.currentUser?.uid == nil {
             performSelector(#selector(didLogoutWithSuccess), withObject: nil, afterDelay: 0)
         } else {
             let auth = FIRAuth.auth()?.currentUser
-            user.setData(auth!)
+            // user.setData(auth!)
         }
     }
     func userDidSelectGridCell(cell: GridTableViewCell, whichImage: Int) {

@@ -167,7 +167,6 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
 
     }
     
-    
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if didLogoutWithSuccess() {
             // TODO: change this
