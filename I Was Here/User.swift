@@ -72,4 +72,10 @@ class User {
     func getViewMode() -> Bool {
         return isList
     }
+    
+    //For sending notifications in settings
+    func getNotificationForUser() -> Bool {
+        // Here we get user's mode from back-end .. and return whether it is true or false.
+        return true
+    }
 }
