@@ -9,7 +9,7 @@
 import UIKit
 // import QuartzCore
 import Firebase
-import FirebaseAuth
+// import FirebaseAuth
 
 class LoginViewController: UIViewController {
     

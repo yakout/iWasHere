@@ -11,16 +11,21 @@ import Firebase
 import FirebaseAuth
 
 class User {
+    
+    // MARK: vars
+    
     var uid: String?
     var email: String?
     var username: String?
     var name: String?
     var profileImageUrl: String?
     var memories: [Memory]?
-  
-  init(authData: FIRUser) {
-    uid = authData.uid
-    email = authData.email!
-  }
     
+    init(authData: FIRUser) {
+        uid = authData.uid
+        email = authData.email!
+    }
+    private func uploadImageToDatabase() {
+        //TODO: update
+    }
 }
