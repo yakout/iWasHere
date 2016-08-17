@@ -87,7 +87,6 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier(memoryCell) as? MemoryTableViewCell
         let newMemory = memories[indexPath.row]
-        
         cell?.textLabel?.text = newMemory.description
         cell?.detailTextLabel?.text = newMemory.addedByUser
         if let imageUrlString = newMemory.imageUrl {
