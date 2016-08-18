@@ -30,7 +30,7 @@ class Place {
         self.memories.append(memory)
     }
     
-    func deleteMemory(memory: Memory) {
-        // self.memories.
+    func deleteMemory(index: Int) {
+        self.memories.removeAtIndex(index)
     }
 }
