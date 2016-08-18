@@ -9,10 +9,12 @@
 import UIKit
 import Firebase
 
-class SignupViewController: UIViewController {
+class SignupViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Constants
+    
     let wallIdentifier = "signupToWall"
+    
     
     // MARK: - Outlets
     
@@ -22,7 +24,7 @@ class SignupViewController: UIViewController {
     
     // MARK: - Actions
     
-    @IBAction func signup(sender: UIButton) {
+    @IBAction func signup(sender: UIButton?) {
         let emailField = email.text!
         let passwordField = password.text!
         
@@ -45,6 +47,9 @@ class SignupViewController: UIViewController {
         }
     }
     
+    
+    // MARK: - Methods
+    
     func addUserIntoDatabase(auth: FIRUser) {
         let ref = FIRDatabase.database().reference().child("users").child(auth.uid)
         let values = ["email": auth.email!, "uid": auth.uid]
@@ -55,9 +60,28 @@ class SignupViewController: UIViewController {
         }
     }
     
+    
+    // MARK: - UITextFieldDelegate Methods
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == email {
+            password.becomeFirstResponder()
+        } else if textField == password {
+            password.resignFirstResponder()
+            self.signup(nil)
+        }
+        return true
+    }
+    
+    
     // MARK: - Life Cycle
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.email.delegate = self
+        self.password.delegate = self
+        email.becomeFirstResponder()
     }
 
 }
