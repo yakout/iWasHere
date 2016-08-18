@@ -11,42 +11,24 @@ import UIKit
 import Firebase
 
 
-class LoginViewController: UIViewController {
+class LoginViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: Constants
     
     let loginToWall = "loginToWall"
     let user = User.user
     
+    
     // MARK: Outlets
+    
     @IBOutlet weak var textFieldLoginEmail: UITextField!
     @IBOutlet weak var textFieldLoginPassword: UITextField!
     
-    // MARK: Properties
     
-    // MARK: UIViewController Lifecycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        if let uid = FIRAuth.auth()?.currentUser?.uid {
-            print("User is signed in with uid:", uid)
-            user.setData((FIRAuth.auth()?.currentUser)!)
-            performSegueWithIdentifier(loginToWall, sender: nil)
-        }
-    }
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-//        FIRAuth.auth()!.addAuthStateDidChangeListener() { (auth, user) in
-//            if let user = user {
-//                print("User is signed in with uid:", user.uid)
-//                // self.performSegueWithIdentifier(self.loginToWall, sender: nil)
-//            } else {
-//                print("no user signed in")
-//            }
-//        }
-    }
     
     // MARK: Actions
-    @IBAction func loginDidTouch(sender: AnyObject) {
+    
+    @IBAction func loginDidTouch(sender: AnyObject?) {
         let email = textFieldLoginEmail.text!
         let pass = textFieldLoginPassword.text!
         FIRAuth.auth()?.signInWithEmail(email, password: pass) { [weak self]
@@ -60,5 +42,46 @@ class LoginViewController: UIViewController {
             }
         }
     }
+    
+    
+    // MARK: - UITextFieldDelegate Methods
+    
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        if textField == textFieldLoginEmail {
+            textFieldLoginPassword.becomeFirstResponder()
+        } else if textField == textFieldLoginPassword {
+            textFieldLoginPassword.resignFirstResponder()
+            self.loginDidTouch(nil)
+        }
+        return true
+    }
+    
+    
+    // MARK: UIViewController Lifecycle
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.textFieldLoginEmail.delegate = self
+        self.textFieldLoginPassword.delegate = self
+        textFieldLoginEmail.becomeFirstResponder()
+        
+        if let uid = FIRAuth.auth()?.currentUser?.uid {
+            print("User is signed in with uid:", uid)
+            user.setData((FIRAuth.auth()?.currentUser)!)
+            performSegueWithIdentifier(loginToWall, sender: nil)
+        }
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        //        FIRAuth.auth()!.addAuthStateDidChangeListener() { (auth, user) in
+        //            if let user = user {
+        //                print("User is signed in with uid:", user.uid)
+        //                // self.performSegueWithIdentifier(self.loginToWall, sender: nil)
+        //            } else {
+        //                print("no user signed in")
+        //            }
+        //        }
+    }
+    
 }
 
