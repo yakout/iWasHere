@@ -54,13 +54,24 @@ extension WallTableViewController: ListTableViewCellDelegate, GridTableViewCellD
     
     func userDidSelectGridCell(cell: GridTableViewCell, whichImage: Int) {
         //let folderIndex = whichImage + self.tableView.indexPathForCell(cell)
-        print(whichImage + 3 * self.tableView.indexPathForCell(cell)!.row)
+        let indexPath = self.tableView.indexPathForCell(cell)!
+        segueFolderIndex = whichImage + 3 * indexPath.row
+        print(segueFolderIndex)
+        self.performSegueWithIdentifier(folderSegue, sender: self)
     }
     func userDidSelectListCell(cell: ListTableViewCell) {
         //let folderIndex = self.tableView.indexPathForCell(cell)
         //performSegueWithIdentifier(Image Table Controller)
         if let indexPath = self.tableView.indexPathForCell(cell) {
-            print(indexPath.row)
+            segueFolderIndex = indexPath.row
+            print(segueFolderIndex)
+            self.performSegueWithIdentifier(folderSegue, sender: self)
+        }
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == folderSegue {
+            let memoriesViewController = segue.destinationViewController as? MemoriesTableViewController
+            memoriesViewController?.currentFolderIndex = segueFolderIndex
         }
     }
 }

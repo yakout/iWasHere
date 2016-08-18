@@ -24,7 +24,9 @@ class ListTableViewCell: UITableViewCell {
     
     override func setSelected(selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-        self.delegate?.userDidSelectListCell(self)
+        if selected {
+            self.delegate?.userDidSelectListCell(self)
+        }
         // Configure the view for the selected state
     }
     

@@ -21,7 +21,7 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
     let rootRef = FIRDatabase.database().reference() // This establishes a connection to your Firebase database using the unique URL in GoogleService-Info.plist file.
     // let ref = FIRDatabase.database().referenceFromURL("http")
     let ref = FIRDatabase.database().reference()
-    
+    let folderSegue = "openFolderSegue"
     
     // MARK: Properties
     var appSettings = AppSettings()
@@ -32,7 +32,7 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
             tableView.reloadData()
         }
     }
-    
+    var segueFolderIndex: Int!
     
     //        let newMemory = memories[indexPath.row]
     //        cell?.textLabel?.text = newMemory.description
@@ -144,7 +144,7 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
         // tableView.rowHeight = UITableViewAutomaticDimension
         
         user.loadMemories()
-        isList = false // appSettings.get(AppSettings.Settings.ListViewIsEnabled) as! Bool
+        isList = true// appSettings.get(AppSettings.Settings.ListViewIsEnabled) as! Bool
         
         if FIRAuth.auth()?.currentUser?.uid == nil {
             performSelector(#selector(didLogoutWithSuccess), withObject: nil, afterDelay: 0)
