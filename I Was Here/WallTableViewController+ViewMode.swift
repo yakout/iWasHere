@@ -42,7 +42,8 @@ extension WallTableViewController: ListTableViewCellDelegate, GridTableViewCellD
             cell?.folderName1.text = user.getFolderName(indexPath.row * 3)
             cell?.folderName2.text = user.getFolderName(indexPath.row  * 3 + 1)
             cell?.folderName3.text = user.getFolderName(indexPath.row * 3 + 2)
-            cell?.setFolderImages(user.getFolderImage(indexPath.row * 3), image2: user.getFolderImage(indexPath.row * 3 + 1),
+            cell?.setFolderImages(user.getFolderImage(indexPath.row * 3),
+                                  image2: user.getFolderImage(indexPath.row * 3 + 1),
                                   image3: user.getFolderImage(indexPath.row * 3 + 2))
             cell?.delegate = self
             return cell!

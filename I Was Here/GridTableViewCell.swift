@@ -39,9 +39,9 @@ class GridTableViewCell: UITableViewCell {
     }
     
     func setFolderImages(image1: UIImage?, image2: UIImage?, image3: UIImage?) {
-        folder1.imageView?.image = image1
-        folder2.imageView?.image = image2
-        folder3.imageView?.image = image3
+        folder1.setImage(image1, forState: .Normal)
+        folder2.setImage(image2, forState: .Normal)
+        folder3.setImage(image3, forState: .Normal)
     }
     
     override func awakeFromNib() {

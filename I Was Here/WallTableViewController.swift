@@ -144,7 +144,7 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
         // tableView.rowHeight = UITableViewAutomaticDimension
         
         user.loadMemories()
-        isList = appSettings.get(AppSettings.Settings.ListViewIsEnabled) as! Bool
+        isList = false // appSettings.get(AppSettings.Settings.ListViewIsEnabled) as! Bool
         
         if FIRAuth.auth()?.currentUser?.uid == nil {
             performSelector(#selector(didLogoutWithSuccess), withObject: nil, afterDelay: 0)
