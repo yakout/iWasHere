@@ -132,7 +132,7 @@
         <!--Wall-->
         <scene sceneID="jk9-p6-llP">
             <objects>
-                <tableViewController title="Wall" id="Hi0-Bd-OeK" customClass="WallTableViewController_Merge" customModule="I_Was_Here" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController title="Wall" id="Hi0-Bd-OeK" customClass="WallTableViewController" customModule="I_Was_Here" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="252" sectionHeaderHeight="22" sectionFooterHeight="22" id="Mm7-3g-UBz">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -510,7 +510,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y4D-9G-cqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2150" y="1258"/>
+            <point key="canvasLocation" x="1890" y="1233"/>
         </scene>
         <!--settings-->
         <scene sceneID="RDK-na-8vD">
@@ -619,7 +619,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FSw-dq-3rj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1485" y="1213"/>
+            <point key="canvasLocation" x="1477" y="2005"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="gs7-GJ-PnL">
@@ -652,6 +652,7 @@
                         <navigationBar key="tableHeaderView" contentMode="scaleToFill" id="bqF-ni-1zx">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="44"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <color key="barTintColor" red="0.2901960784" green="0.65098039220000004" blue="0.4941176471" alpha="1" colorSpace="calibratedRGB"/>
                             <items>
                                 <navigationItem title="Profile settings" id="tQu-xV-Vkr"/>
                             </items>
@@ -740,12 +741,6 @@
                                     <rect key="frame" x="0.0" y="0.0" width="600" height="57"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                     <subviews>
-                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="whg-cP-7xK">
-                                            <rect key="frame" x="543" y="13" width="51" height="31"/>
-                                            <connections>
-                                                <action selector="notificationSelector:" destination="VyF-Tn-DNf" eventType="valueChanged" id="eF2-4w-e1w"/>
-                                            </connections>
-                                        </switch>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Send notifications" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p6V-99-NZO">
                                             <rect key="frame" x="17" y="18" width="237" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="16"/>
@@ -789,7 +784,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c7k-rb-vdS" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1269" y="1207"/>
+            <point key="canvasLocation" x="1129" y="1233"/>
         </scene>
         <!--Photos-->
         <scene sceneID="8ye-bA-kSz">

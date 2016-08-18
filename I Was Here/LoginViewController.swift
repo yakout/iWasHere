@@ -9,12 +9,14 @@
 import UIKit
 // import QuartzCore
 import Firebase
-// import FirebaseAuth
+
 
 class LoginViewController: UIViewController {
     
     // MARK: Constants
+    
     let loginToWall = "loginToWall"
+    let user = User.user
     
     // MARK: Outlets
     @IBOutlet weak var textFieldLoginEmail: UITextField!
@@ -27,8 +29,8 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         if let uid = FIRAuth.auth()?.currentUser?.uid {
             print("User is signed in with uid:", uid)
-            User.user = User(authData: (FIRAuth.auth()?.currentUser)!)
-            self.performSegueWithIdentifier(self.loginToWall, sender: nil)
+            user.setData((FIRAuth.auth()?.currentUser)!)
+            performSegueWithIdentifier(loginToWall, sender: nil)
         }
     }
     override func viewDidAppear(animated: Bool) {

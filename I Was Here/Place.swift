@@ -26,4 +26,11 @@ class Place {
         return self.memories
     }
     
+    func addMemory(memory: Memory) {
+        self.memories.append(memory)
+    }
+    
+    func deleteMemory(memory: Memory) {
+        // self.memories.
+    }
 }

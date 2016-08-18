@@ -7,34 +7,27 @@
 //
 
 import UIKit
+
 protocol GridTableViewCellDelegate {
     func userDidSelectGridCell(cell: GridTableViewCell, whichImage: Int)
 }
+
 class GridTableViewCell: UITableViewCell {
     // MARK: - Properties
+    
     var delegate: GridTableViewCellDelegate?
+    
+    // MARK: - Outlets
+    
     @IBOutlet weak var folderName1: UILabel!
     @IBOutlet weak var folderName2: UILabel!
     @IBOutlet weak var folderName3: UILabel!
     @IBOutlet weak var folder1: UIButton!
     @IBOutlet weak var folder2: UIButton!
     @IBOutlet weak var folder3: UIButton!
-   
+    
     // MARK: - Actions
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        // Configure the view for the selected state
-    }
-    func setFolderImages(image1: UIImage?, image2: UIImage?, image3: UIImage?) {
-        folder1.imageView?.image = image1
-        folder2.imageView?.image = image2
-        folder3.imageView?.image = image3
-    }
+    
     @IBAction func clickedFolder1(sender: UIButton) {
         self.delegate?.userDidSelectGridCell(self, whichImage: 0)
     }
@@ -43,5 +36,21 @@ class GridTableViewCell: UITableViewCell {
     }
     @IBAction func clickedFolder3(sender: UIButton) {
         self.delegate?.userDidSelectGridCell(self, whichImage: 2)
+    }
+    
+    func setFolderImages(image1: UIImage?, image2: UIImage?, image3: UIImage?) {
+        folder1.imageView?.image = image1
+        folder2.imageView?.image = image2
+        folder3.imageView?.image = image3
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+    }
+    
+    override func setSelected(selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        // Configure the view for the selected state
     }
 }

@@ -9,32 +9,15 @@
 import UIKit
 import Firebase
 
-class WallTableViewController_Merge: UITableViewController, ListTableViewCellDelegate, GridTableViewCellDelegate {
-    //MARK: - Properties
-    var user = User.getUser()!
-    var isList: Bool!
+extension WallTableViewController: ListTableViewCellDelegate, GridTableViewCellDelegate {
     
-    override func viewDidLoad() {
-        // user.loadMemories()
-        // isList = user.getViewMode()
-        if FIRAuth.auth()?.currentUser?.uid == nil {
-            performSelector(#selector(didLogoutWithSuccess), withObject: nil, afterDelay: 0)
-        } else {
-            let auth = FIRAuth.auth()?.currentUser
-            // user.setData(auth!)
-        }
-    }
-    func userDidSelectGridCell(cell: GridTableViewCell, whichImage: Int) {
-        //let folderIndex = whichImage + self.tableView.indexPathForCell(cell)
-        print(whichImage + 3 * self.tableView.indexPathForCell(cell)!.row)
-    }
-    func userDidSelectListCell(cell: ListTableViewCell) {
-        //let folderIndex = self.tableView.indexPathForCell(cell)
-        //performSegueWithIdentifier(Image Table Controller)
-        if let indexPath = self.tableView.indexPathForCell(cell) {
-            print(indexPath.row)
-        }
-    }
+    // MARK: - Properties
+    
+    // .. moved to original class
+    
+    
+    // MARK: Table view
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numberOfFolders = user.getNumberOfFolders()
         if isList! {
@@ -60,19 +43,23 @@ class WallTableViewController_Merge: UITableViewController, ListTableViewCellDel
             cell?.folderName2.text = user.getFolderName(indexPath.row  * 3 + 1)
             cell?.folderName3.text = user.getFolderName(indexPath.row * 3 + 2)
             cell?.setFolderImages(user.getFolderImage(indexPath.row * 3), image2: user.getFolderImage(indexPath.row * 3 + 1),
-                                 image3: user.getFolderImage(indexPath.row * 3 + 2))
+                                  image3: user.getFolderImage(indexPath.row * 3 + 2))
             cell?.delegate = self
             return cell!
         }
     }
-    func didLogoutWithSuccess() -> Bool {
-        do {
-            try FIRAuth.auth()?.signOut()
-            print("user signed out")
-            return true
-        } catch let logoutError {
-            print(logoutError)
-            return false
+    
+    // MARK: Grid and List Delegate Methods
+    
+    func userDidSelectGridCell(cell: GridTableViewCell, whichImage: Int) {
+        //let folderIndex = whichImage + self.tableView.indexPathForCell(cell)
+        print(whichImage + 3 * self.tableView.indexPathForCell(cell)!.row)
+    }
+    func userDidSelectListCell(cell: ListTableViewCell) {
+        //let folderIndex = self.tableView.indexPathForCell(cell)
+        //performSegueWithIdentifier(Image Table Controller)
+        if let indexPath = self.tableView.indexPathForCell(cell) {
+            print(indexPath.row)
         }
     }
 }

@@ -1,5 +1,5 @@
 //
-//  UIViewControllerExtension.swift
+//  UIViewController+showErrorView.swift
 //  iWasHere
 //
 //  Created by Ahmed Yakout on 8/10/16.
