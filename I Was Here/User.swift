@@ -95,4 +95,5 @@ class User {
         return places?[folderIndex].getPlaceMemories()[memoryIndex].description ?? ""
     }
     
+    
 }
