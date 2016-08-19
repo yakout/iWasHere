@@ -22,6 +22,9 @@ class User {
     var name: String?
     var profileImageUrl: String?
     var places: [Place]?
+    // initially on turned on notifications.
+    var isList = true
+    var sendNotifications = true
     
     // singelton user
     static var user = User()
@@ -37,6 +40,28 @@ class User {
         uid = authData.uid
         email = authData.email!
     }
+    
+    private func sendNotificationsMode() -> Bool {
+        // Here we get the mode from data
+        //....
+        return sendNotifications
+    }
+    func setNotificationsMode(on: Bool) {
+        //Save this data as well..
+        
+        sendNotifications = on
+    }
+    private func iconsMode() -> Bool {
+        // Here we get the mode from data
+        //....
+        return isList
+        
+    }
+    func setIconsMode(list: Bool) {
+        isList = list
+    }
+
+    
     // MARK: - Actions
     func loadMemories() {
         // TODO: - Retrieve user's memories from an offline source (file i/o).
