@@ -20,7 +20,7 @@ extension WallTableViewController: ListTableViewCellDelegate, GridTableViewCellD
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numberOfFolders = user.getNumberOfFolders()
-        if isList {
+        if isList! {
             return numberOfFolders
         } else {
             if (numberOfFolders % 3) == 0 {
@@ -31,7 +31,7 @@ extension WallTableViewController: ListTableViewCellDelegate, GridTableViewCellD
         }
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if isList {
+        if isList! {
             let cell = self.tableView.dequeueReusableCellWithIdentifier("wallListViewCell") as? ListTableViewCell
             cell?.delegate = self
             cell?.folderName.text = user.getFolderName(indexPath.row)

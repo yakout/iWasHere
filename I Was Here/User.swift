@@ -57,7 +57,7 @@ class User {
     func setIconsMode(isList: Bool) {
         self.isList = isList
     }
-
+    
     
     // MARK: - Methods
     
@@ -117,5 +117,6 @@ class User {
     func getMemoryDescription(folderIndex: Int, memoryIndex: Int) -> String {
         return places?[folderIndex].getPlaceMemories()[memoryIndex].description ?? ""
     }
+    
     
 }
