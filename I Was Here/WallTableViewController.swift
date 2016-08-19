@@ -58,9 +58,22 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
         imagePicker.delegate = self
         imagePicker.allowsEditing = true // if you set this for true you need to access the editted photo using UIImagePickerControllerEditedImage
         
-        imagePicker.sourceType = .PhotoLibrary
-        // imagePicker.sourceType = .Camera
-        presentViewController(imagePicker, animated: true, completion: nil)
+        let options = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        options.addAction(UIAlertAction(title: "Photo Album", style: .Default) { [weak self] (action: UIAlertAction) in
+            imagePicker.sourceType = .PhotoLibrary
+            self?.presentViewController(imagePicker, animated: true, completion: nil)
+        })
+        
+        options.addAction(UIAlertAction(title: "Camera", style: .Default) { [weak self] (action) in
+            imagePicker.sourceType = .Camera
+            self?.presentViewController(imagePicker, animated: true, completion: nil)
+        })
+        
+        options.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { [weak self] (action) in
+            // you dont need to dismiss the view controller
+        })
+        
+        presentViewController(options, animated: true, completion: nil)
     }
     
     // MARK: - UIImagePickerControllerDelegate Methods
