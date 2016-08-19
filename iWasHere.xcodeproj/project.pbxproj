@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		25760B761D638947006584D5 /* WallTableViewController+ViewMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25760B751D638947006584D5 /* WallTableViewController+ViewMode.swift */; };
+		25D1C8231D6740EB001A223F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D1C8221D6740EB001A223F /* SettingsViewController.swift */; };
 		4C10EF1D1D668497009C63F7 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C10EF1C1D668497009C63F7 /* ImageViewController.swift */; };
 		4C4E73431D61D381006AA4FB /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4E73421D61D381006AA4FB /* ListTableViewCell.swift */; };
 		4C4E73451D61DBE8006AA4FB /* GridTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4E73441D61DBE8006AA4FB /* GridTableViewCell.swift */; };
@@ -27,11 +28,13 @@
 		63AF45CA1D5BD3C600CD5B41 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF45C71D5BD3C600CD5B41 /* LoginViewController.swift */; };
 		63AF45CB1D5BD3C600CD5B41 /* WallTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF45C81D5BD3C600CD5B41 /* WallTableViewController.swift */; };
 		63AF45CE1D5BEBAF00CD5B41 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF45CD1D5BEBAF00CD5B41 /* SignupViewController.swift */; };
+		BE221AA88BBEA6519A9EA862 /* Pods_I_Was_Here.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC8BB189F875957BAA3A20A /* Pods_I_Was_Here.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		00D7A2D27411458EA748B1A2 /* Pods-I Was Here.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-I Was Here.debug.xcconfig"; path = "Pods/Target Support Files/Pods-I Was Here/Pods-I Was Here.debug.xcconfig"; sourceTree = "<group>"; };
 		25760B751D638947006584D5 /* WallTableViewController+ViewMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "WallTableViewController+ViewMode.swift"; sourceTree = "<group>"; };
+		25D1C8221D6740EB001A223F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		4C10EF1C1D668497009C63F7 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		4C4E73421D61D381006AA4FB /* ListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
 		4C4E73441D61DBE8006AA4FB /* GridTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridTableViewCell.swift; sourceTree = "<group>"; };
@@ -53,6 +56,7 @@
 		63AF45C71D5BD3C600CD5B41 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		63AF45C81D5BD3C600CD5B41 /* WallTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WallTableViewController.swift; sourceTree = "<group>"; };
 		63AF45CD1D5BEBAF00CD5B41 /* SignupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupViewController.swift; sourceTree = "<group>"; };
+		ECC8BB189F875957BAA3A20A /* Pods_I_Was_Here.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_I_Was_Here.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EE55930C04C13DA87A7AFBFB /* Pods-I Was Here.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-I Was Here.release.xcconfig"; path = "Pods/Target Support Files/Pods-I Was Here/Pods-I Was Here.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -62,6 +66,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C896BFB1D5EEB4700F32464 /* Pods_I_Was_Here.framework in Frameworks */,
+				BE221AA88BBEA6519A9EA862 /* Pods_I_Was_Here.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +136,7 @@
 				63AF45C81D5BD3C600CD5B41 /* WallTableViewController.swift */,
 				25760B751D638947006584D5 /* WallTableViewController+ViewMode.swift */,
 				4C9885121D6648CB0007F050 /* MemoriesTableViewController.swift */,
+				25D1C8221D6740EB001A223F /* SettingsViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -158,6 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				4C896BFA1D5EEB4700F32464 /* Pods_I_Was_Here.framework */,
+				ECC8BB189F875957BAA3A20A /* Pods_I_Was_Here.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -302,6 +309,7 @@
 				6316F0211D5768C300A2F2FA /* I_Was_Here.xcdatamodeld in Sources */,
 				6316F0191D5768C200A2F2FA /* AppDelegate.swift in Sources */,
 				63AF45CA1D5BD3C600CD5B41 /* LoginViewController.swift in Sources */,
+				25D1C8231D6740EB001A223F /* SettingsViewController.swift in Sources */,
 				4C10EF1D1D668497009C63F7 /* ImageViewController.swift in Sources */,
 				4C4E73451D61DBE8006AA4FB /* GridTableViewCell.swift in Sources */,
 				63AF45C51D5BD3B400CD5B41 /* Memory.swift in Sources */,
