@@ -28,7 +28,7 @@
 		63AF45CA1D5BD3C600CD5B41 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF45C71D5BD3C600CD5B41 /* LoginViewController.swift */; };
 		63AF45CB1D5BD3C600CD5B41 /* WallTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF45C81D5BD3C600CD5B41 /* WallTableViewController.swift */; };
 		63AF45CE1D5BEBAF00CD5B41 /* SignupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63AF45CD1D5BEBAF00CD5B41 /* SignupViewController.swift */; };
-		BE221AA88BBEA6519A9EA862 /* Pods_I_Was_Here.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ECC8BB189F875957BAA3A20A /* Pods_I_Was_Here.framework */; };
+		8115DBDAE1D44887C81DA683 /* Pods_I_Was_Here.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CF9A415DB8D844812F19EDA /* Pods_I_Was_Here.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +40,7 @@
 		4C4E73441D61DBE8006AA4FB /* GridTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridTableViewCell.swift; sourceTree = "<group>"; };
 		4C896BFA1D5EEB4700F32464 /* Pods_I_Was_Here.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_I_Was_Here.framework; path = "../../Library/Developer/Xcode/DerivedData/iWasHere-gtxtgaworrejcdcccukkxxnmrfzl/Build/Products/Debug-iphonesimulator/Pods_I_Was_Here.framework"; sourceTree = "<group>"; };
 		4C9885121D6648CB0007F050 /* MemoriesTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoriesTableViewController.swift; sourceTree = "<group>"; };
+		5CF9A415DB8D844812F19EDA /* Pods_I_Was_Here.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_I_Was_Here.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6316F0151D5768C100A2F2FA /* I Was Here.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "I Was Here.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6316F0181D5768C200A2F2FA /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6316F01D1D5768C300A2F2FA /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -66,7 +67,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4C896BFB1D5EEB4700F32464 /* Pods_I_Was_Here.framework in Frameworks */,
-				BE221AA88BBEA6519A9EA862 /* Pods_I_Was_Here.framework in Frameworks */,
+				8115DBDAE1D44887C81DA683 /* Pods_I_Was_Here.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -164,7 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				4C896BFA1D5EEB4700F32464 /* Pods_I_Was_Here.framework */,
-				ECC8BB189F875957BAA3A20A /* Pods_I_Was_Here.framework */,
+				5CF9A415DB8D844812F19EDA /* Pods_I_Was_Here.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

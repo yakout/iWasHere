@@ -43,20 +43,22 @@ class SettingsViewController: UITableViewController {
     }
     
     
-    // There is a missing idea of how we update his data in UI on logging on the user
-    
     @IBAction func sendfolderModeToData(sender: AnyObject) {
         let iconState = self.folderMode.selectedSegmentIndex
         // Grid mode..
         if iconState == 0 {
             print("Grid mode is selected")
             user.setIconsMode(false)
+            print(user.iconsModeIsList())
             // Here we send this information to database for this user
+            // TODO: ..
         } else {
             // List mode..
             print("List mode is selected")
             user.setIconsMode(true)
+            print(user.iconsModeIsList())
             // Here we send this information to database for this user
+            // TODO: ..
             
         }
     }

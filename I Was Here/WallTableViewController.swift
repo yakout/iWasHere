@@ -24,9 +24,9 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
     let folderSegue = "openFolderSegue"
     
     // MARK: Properties
-    var appSettings = AppSettings()
+    var appSettings = AppSettings() // ** DEPRECATED **
     var user = User.getUser()
-    var isList: Bool!
+    var isList: Bool = true
     var memories = [Memory]() {
         didSet {
             tableView.reloadData()
@@ -58,9 +58,22 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
         imagePicker.delegate = self
         imagePicker.allowsEditing = true // if you set this for true you need to access the editted photo using UIImagePickerControllerEditedImage
         
-        imagePicker.sourceType = .PhotoLibrary
-        // imagePicker.sourceType = .Camera
-        presentViewController(imagePicker, animated: true, completion: nil)
+        let options = UIAlertController(title: nil, message: nil, preferredStyle: .ActionSheet)
+        options.addAction(UIAlertAction(title: "Photo Album", style: .Default) { [weak self] (action: UIAlertAction) in
+            imagePicker.sourceType = .PhotoLibrary
+            self?.presentViewController(imagePicker, animated: true, completion: nil)
+        })
+        
+        options.addAction(UIAlertAction(title: "Camera", style: .Default) { [weak self] (action) in
+            imagePicker.sourceType = .Camera
+            self?.presentViewController(imagePicker, animated: true, completion: nil)
+        })
+        
+        options.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
+            // you dont need to dismiss the view controller
+        })
+        
+        presentViewController(options, animated: true, completion: nil)
     }
     
     // MARK: - UIImagePickerControllerDelegate Methods
@@ -144,7 +157,8 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
         // tableView.rowHeight = UITableViewAutomaticDimension
         
         user.loadMemories()
-        isList = true// appSettings.get(AppSettings.Settings.ListViewIsEnabled) as! Bool
+        isList = user.sendNotificationsMode()
+        print(" ++++++++++++++++++++++++++++++++++++++++++ isList = \(isList) ++++++++++++++++++++++++++++++++++++ ")
         
         if FIRAuth.auth()?.currentUser?.uid == nil {
             performSelector(#selector(didLogoutWithSuccess), withObject: nil, afterDelay: 0)
@@ -155,9 +169,16 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
         }
     }
     
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        isList = user.sendNotificationsMode()
+        print(" ++++++++++++++++++++++++++++++++++++++++++ isList = \(isList) ++++++++++++++++++++++++++++++++++++ ")
+    }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        
+        isList = user.sendNotificationsMode()
+        print(" ++++++++++++++++++++++++++++++++++++++++++ isList = \(isList) ++++++++++++++++++++++++++++++++++++ ")
         // Here we’ve added an observer that executes the given closure whenever the value that ref points to is changed.
         // ref.queryOrderedByChild("somekey").obser... to order
         //        ref.observeEventType(.Value, withBlock: { snapshot in // snapshot repressent data at specific moments in time
@@ -185,6 +206,8 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
+        isList = user.sendNotificationsMode()
+        print(" ++++++++++++++++++++++++++++++++++++++++++ isList = \(isList) ++++++++++++++++++++++++++++++++++++ ")
     }
     
 }

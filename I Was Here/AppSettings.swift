@@ -9,6 +9,8 @@
 import Foundation
 
 
+// ++++++++++++++++++++ WARNINIG: DEPRECATED CLASS, WE DON'T NEED IT ANYMORE. THANKS FOR BEING A GOOD CLASS FOR OUR CLIENTS ++++++++++++++++++++
+
 class AppSettings {
     private struct Const {
         static let notification = "enableNotifications.Values"
