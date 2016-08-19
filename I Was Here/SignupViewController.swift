@@ -52,7 +52,11 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     
     func addUserIntoDatabase(auth: FIRUser) {
         let ref = FIRDatabase.database().reference().child("users").child(auth.uid)
-        let values = ["email": auth.email!, "uid": auth.uid]
+        let values = ["email": auth.email!,
+                      "uid": auth.uid,
+                      "name": "",
+                      "profileImageUrl": "",
+                      "username": ""]
         ref.updateChildValues(values) { (error,ref) in
             if error != nil {
                 print(error)

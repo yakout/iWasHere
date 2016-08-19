@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import Alamofire
+
 
 class SettingsViewController: UITableViewController {
     
