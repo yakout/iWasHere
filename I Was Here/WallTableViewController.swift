@@ -26,7 +26,7 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
     // MARK: Properties
     var appSettings = AppSettings() // ** DEPRECATED **
     var user = User.getUser()
-    var isList: Bool = true
+    var isList: Bool!
     var memories = [Memory]() {
         didSet {
             tableView.reloadData()
@@ -157,8 +157,7 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
         // tableView.rowHeight = UITableViewAutomaticDimension
         
         user.loadMemories()
-        isList = user.sendNotificationsMode()
-        print(" ++++++++++++++++++++++++++++++++++++++++++ isList = \(isList) ++++++++++++++++++++++++++++++++++++ ")
+        isList = user.iconsModeIsList()
         
         if FIRAuth.auth()?.currentUser?.uid == nil {
             performSelector(#selector(didLogoutWithSuccess), withObject: nil, afterDelay: 0)
@@ -171,14 +170,13 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
     
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
-        isList = user.sendNotificationsMode()
-        print(" ++++++++++++++++++++++++++++++++++++++++++ isList = \(isList) ++++++++++++++++++++++++++++++++++++ ")
+        isList = user.iconsModeIsList()
+        tableView.reloadData()
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         isList = user.sendNotificationsMode()
-        print(" ++++++++++++++++++++++++++++++++++++++++++ isList = \(isList) ++++++++++++++++++++++++++++++++++++ ")
         // Here we’ve added an observer that executes the given closure whenever the value that ref points to is changed.
         // ref.queryOrderedByChild("somekey").obser... to order
         //        ref.observeEventType(.Value, withBlock: { snapshot in // snapshot repressent data at specific moments in time
@@ -206,8 +204,6 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
     
     override func viewDidDisappear(animated: Bool) {
         super.viewDidDisappear(animated)
-        isList = user.sendNotificationsMode()
-        print(" ++++++++++++++++++++++++++++++++++++++++++ isList = \(isList) ++++++++++++++++++++++++++++++++++++ ")
     }
     
 }
