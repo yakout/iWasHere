@@ -22,14 +22,15 @@ class User {
     var name: String?
     var profileImageUrl: String?
     var places: [Place]?
-    // initially on turned on notifications.
-    var isList = true
-    var sendNotifications = true
+    private var isList = true // default
+    private var sendNotifications = true // defualt
+    
+    
+    // MARK: - User Life Cycle
     
     // singelton user
     static var user = User()
     
-    // MARK: - User Life Cycle
     private init() {
         
     }
@@ -41,28 +42,25 @@ class User {
         email = authData.email!
     }
     
-    private func sendNotificationsMode() -> Bool {
-        // Here we get the mode from data
-        //....
+    
+    // MARK: - User Settings
+    
+    func sendNotificationsMode() -> Bool {
         return sendNotifications
     }
-    func setNotificationsMode(on: Bool) {
-        //Save this data as well..
-        
-        sendNotifications = on
+    func setNotificationsMode(enable: Bool) {
+        self.sendNotifications = enable
     }
-    private func iconsMode() -> Bool {
-        // Here we get the mode from data
-        //....
+    func iconsModeIsList() -> Bool {
         return isList
-        
     }
-    func setIconsMode(list: Bool) {
-        isList = list
+    func setIconsMode(isList: Bool) {
+        self.isList = isList
     }
 
     
-    // MARK: - Actions
+    // MARK: - Methods
+    
     func loadMemories() {
         // TODO: - Retrieve user's memories from an offline source (file i/o).
         // Getting memories from the back-end would be a big overhead.
@@ -119,6 +117,5 @@ class User {
     func getMemoryDescription(folderIndex: Int, memoryIndex: Int) -> String {
         return places?[folderIndex].getPlaceMemories()[memoryIndex].description ?? ""
     }
-    
     
 }

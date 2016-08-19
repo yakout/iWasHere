@@ -20,7 +20,7 @@ extension WallTableViewController: ListTableViewCellDelegate, GridTableViewCellD
     
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let numberOfFolders = user.getNumberOfFolders()
-        if isList! {
+        if isList {
             return numberOfFolders
         } else {
             if (numberOfFolders % 3) == 0 {
@@ -31,21 +31,21 @@ extension WallTableViewController: ListTableViewCellDelegate, GridTableViewCellD
         }
     }
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        if isList! {
+        if isList {
             let cell = self.tableView.dequeueReusableCellWithIdentifier("wallListViewCell") as? ListTableViewCell
-            cell?.folderName.text = user.getFolderName(indexPath.row)
-            cell?.folderImage.image = user.getFolderImage(indexPath.row)
             cell?.delegate = self
+            cell?.folderName.text = user.getFolderName(indexPath.row)
+            cell?.folderImage.image =  UIImage(named: "addPictures") // user.getFolderImage(indexPath.row)
             return cell!
         } else {
             let cell = self.tableView.dequeueReusableCellWithIdentifier("wallGridViewCell") as? GridTableViewCell
+            cell?.delegate = self
             cell?.folderName1.text = user.getFolderName(indexPath.row * 3)
             cell?.folderName2.text = user.getFolderName(indexPath.row  * 3 + 1)
             cell?.folderName3.text = user.getFolderName(indexPath.row * 3 + 2)
             cell?.setFolderImages(user.getFolderImage(indexPath.row * 3),
                                   image2: user.getFolderImage(indexPath.row * 3 + 1),
                                   image3: user.getFolderImage(indexPath.row * 3 + 2))
-            cell?.delegate = self
             return cell!
         }
     }
