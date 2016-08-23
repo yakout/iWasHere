@@ -5,19 +5,12 @@
 //  Created by Ahmed Khaled on 8/19/16.
 //  Copyright © 2016 iYakout. All rights reserved.
 //
-/*
+
 import UIKit
 import Firebase
 
 class SettingsContentsTableViewController: UITableViewController {
     
-    var segueToCellDirectory: Dictionary<String, String> = [
-        "profilePicture" : "ProfilePicture",
-        "username" : "UserName",
-        "password" : "Password",
-        "about" : "About"
-    ]
-    var destinationCell: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -27,17 +20,18 @@ class SettingsContentsTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
     }
-
-    override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // returns number of rows
-        return 1
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
     }
- 
-    override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell1 = tableView.dequeueReusableCellWithIdentifier("UserName" ,forIndexPath: indexPath)
-        return cell1
+   
+    @IBOutlet weak var cunrrentUserImage: UIImageView!
+    @IBAction func changeUserImage(sender: AnyObject) {
     }
 
+    @IBOutlet weak var newPasswordText: UITextField!
+    @IBOutlet weak var confirmNewPasswordText: UITextField!
+    @IBOutlet weak var currentUserName: NSLayoutConstraint!
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
@@ -82,6 +76,4 @@ class SettingsContentsTableViewController: UITableViewController {
         // Pass the selected object to the new view controller.
     }
     */
-
 }
-*/

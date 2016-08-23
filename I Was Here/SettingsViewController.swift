@@ -8,7 +8,7 @@
 
 import UIKit
 import Firebase
-import Alamofire
+//import Alamofire
 
 
 class SettingsViewController: UITableViewController {
@@ -27,10 +27,14 @@ class SettingsViewController: UITableViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    
     @IBOutlet weak var sendNotifications: UISwitch!
     @IBOutlet weak var folderMode: UISegmentedControl!
     
-    @IBAction func sendNotificationsToData(sender: AnyObject) {
+    /*@IBAction func sendNotificationsToData(sender: AnyObject) {
+     
+    }*/
+    @IBAction func sendNotifications(sender: AnyObject) {
         let isOn = self.sendNotifications.on
         if isOn {
             // Here the switch button is in "On" state.
@@ -44,8 +48,7 @@ class SettingsViewController: UITableViewController {
         user.setNotificationsMode(isOn)
     }
     
-    
-    @IBAction func sendfolderModeToData(sender: AnyObject) {
+    @IBAction func sendFolderModeToDataBase(sender: AnyObject) {
         let iconState = self.folderMode.selectedSegmentIndex
         // Grid mode..
         if iconState == 0 {
