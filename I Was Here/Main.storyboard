@@ -358,6 +358,9 @@
                     <navigationItem key="navigationItem" title="Wall" id="AxO-HH-qdc">
                         <barButtonItem key="leftBarButtonItem" title="Log out" id="XQG-Ds-XU9">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <segue destination="ZIx-Tb-ydx" kind="presentation" identifier="logout" id="5Yi-PB-lIe"/>
+                            </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" image="addPictures" id="WQG-sC-Gf1">
                             <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -577,7 +580,6 @@
                             <constraint firstAttribute="trailingMargin" secondItem="Epi-0G-lHT" secondAttribute="trailing" constant="54" id="doe-ZQ-oSz"/>
                             <constraint firstItem="Gan-t9-T7l" firstAttribute="top" secondItem="vvv-ke-NZU" secondAttribute="bottom" constant="101" id="iYE-8f-1cl"/>
                             <constraint firstItem="Gan-t9-T7l" firstAttribute="leading" secondItem="7bC-Zz-JKp" secondAttribute="leadingMargin" constant="54" id="lf5-B6-igR"/>
-                            <constraint firstItem="h3d-NZ-3aL" firstAttribute="top" secondItem="Epi-0G-lHT" secondAttribute="bottom" constant="218" id="neC-Cl-ohg"/>
                             <constraint firstItem="y4E-dN-muM" firstAttribute="leading" secondItem="7bC-Zz-JKp" secondAttribute="leadingMargin" constant="54" id="ojX-ew-hRf"/>
                             <constraint firstAttribute="trailingMargin" secondItem="vvv-ke-NZU" secondAttribute="trailing" constant="54" id="w1E-9C-E2N"/>
                         </constraints>
@@ -1407,6 +1409,7 @@ gDKIMosynTKgMqUAAAAAAAACAQAAAAAAAAA+AAAAAAAAAAAAAAAAAAAypw
         <image name="settings" width="25" height="25"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="6kc-L8-f4Z"/>
+        <segue reference="gH5-hT-oM2"/>
+        <segue reference="Ug4-EU-OMf"/>
     </inferredMetricsTieBreakers>
 </document>

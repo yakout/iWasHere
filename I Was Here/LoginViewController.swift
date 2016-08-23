@@ -66,9 +66,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         textFieldLoginEmail.becomeFirstResponder()
         
         if let uid = FIRAuth.auth()?.currentUser?.uid {
-            print("User is signed in with uid:", uid)
+            // print("User is signed in with uid:", uid)
             user.setData((FIRAuth.auth()?.currentUser)!)
-            performSegueWithIdentifier(loginToWall, sender: nil)
+            performSegueWithIdentifier(self.loginToWall, sender: nil)
         }
     }
     override func viewDidAppear(animated: Bool) {

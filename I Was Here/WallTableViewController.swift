@@ -62,16 +62,16 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
         options.addAction(UIAlertAction(title: "Photo Album", style: .Default) { [weak self] (action: UIAlertAction) in
             imagePicker.sourceType = .PhotoLibrary
             self?.presentViewController(imagePicker, animated: true, completion: nil)
-        })
+            })
         
         options.addAction(UIAlertAction(title: "Camera", style: .Default) { [weak self] (action) in
             imagePicker.sourceType = .Camera
             self?.presentViewController(imagePicker, animated: true, completion: nil)
-        })
+            })
         
         options.addAction(UIAlertAction(title: "Cancel", style: .Cancel) { (action) in
             // you dont need to dismiss the view controller
-        })
+            })
         
         presentViewController(options, animated: true, completion: nil)
     }
@@ -125,15 +125,9 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
         }
     }
     
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if didLogoutWithSuccess() {
-            // TODO: change this
-            // navigationItem.popToRootViewControllerAnimated(true)?.popLast()
-            return true
-        }
-        return false
-    }
     
+    
+    // MARK: - Methods
     
     func didLogoutWithSuccess() -> Bool {
         do {
@@ -145,6 +139,22 @@ class WallTableViewController: UITableViewController, UIImagePickerControllerDel
             print(logoutError)
             return false
         }
+    }
+    
+    
+    
+    // MARK: - Navigation
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == Const.logoutSegueIdentifier {
+            if didLogoutWithSuccess() {
+                self.navigationController?.popToRootViewControllerAnimated(true)
+                return true
+            } else {
+                return false
+            }
+        }
+        return true
     }
     
     
