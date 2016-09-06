@@ -7,13 +7,11 @@
 //
 
 import UIKit
-import Firebase
-//import Alamofire
 
 
 class SettingsViewController: UITableViewController {
     
-    let user = User.getUser()
+    let user = User.getCurrentUser()
     override func viewDidLoad() {
         super.viewDidLoad()
         // to get the required data for user especially(Grid/List & notifications -> (Yes/No))
@@ -67,16 +65,5 @@ class SettingsViewController: UITableViewController {
             
         }
     }
-    
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

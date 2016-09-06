@@ -7,71 +7,80 @@
 //
 
 import UIKit
-import Firebase
+import Alamofire
 
 class SignupViewController: UIViewController, UITextFieldDelegate {
     
     // MARK: - Constants
+    struct  Const {
+        static let wallIdentifier = "signupToWall"
+    }
     
-    let wallIdentifier = "signupToWall"
     
     
     // MARK: - Outlets
     
-    @IBOutlet weak var email: UITextField!
-    @IBOutlet weak var password: UITextField!
+    @IBOutlet weak var nameField: UITextField!
+    @IBOutlet weak var emailField: UITextField!
+    @IBOutlet weak var passwordField: UITextField!
     
     
     // MARK: - Actions
     
     @IBAction func signup(sender: UIButton?) {
-        let emailField = email.text!
-        let passwordField = password.text!
+        let name = nameField.text
+        let email = emailField.text
+        let pass = passwordField.text
         
-        FIRAuth.auth()?.createUserWithEmail(emailField, password: passwordField) { [weak self] (auth, error) in
-            if error == nil {
-                self?.addUserIntoDatabase(auth!)
-                FIRAuth.auth()?.signInWithEmail(emailField, password: passwordField) {
-                    (auth, error) -> Void in
-                    if (error != nil) {
-                        // print(error)
-                        self?.showErrorView(error!)
-                    } else {
-                        self?.performSegueWithIdentifier((self?.wallIdentifier)!, sender: nil)
+        Alamofire.request(.POST, "https://ec42e392.ngrok.io/register/", parameters: [
+            "email": email ?? "",
+            "password": pass ?? "",
+            "name": name ?? ""
+            ])
+            .responseJSON { [weak self] response in
+                print(response.request)  // original URL request
+                print(response.response) // URL response
+                print(response.data)     // server data
+                print(response.result)   // result of response serialization
+                
+                debugPrint(response)
+                
+                switch response.result {
+                case .Success:
+                    print("Validation Successful")
+                    if let JSON = response.result.value {
+                        print("JSON: \(JSON)")
+                        
+                        User.currentUser.email = email
+                        User.currentUser.name = name
+                        // User.currentUser.token = JSON["token"]
+                        
+                        self?.performSegueWithIdentifier(Const.wallIdentifier, sender: nil)
                     }
+                case .Failure(let error):
+                    print(error)
+                    let errorMessage = error.userInfo["NSLocalizedDescription"] as? String
+                    self?.showErrorView(errorMessage)
                 }
-            } else {
-                // print(error)
-                self?.showErrorView(error!)
-            }
         }
+        
+        
     }
     
     
     // MARK: - Methods
     
-    func addUserIntoDatabase(auth: FIRUser) {
-        let ref = FIRDatabase.database().reference().child("users").child(auth.uid)
-        let values = ["email": auth.email!,
-                      "uid": auth.uid,
-                      "name": "",
-                      "profileImageUrl": "",
-                      "username": ""]
-        ref.updateChildValues(values) { (error,ref) in
-            if error != nil {
-                print(error)
-            }
-        }
-    }
-    
     
     // MARK: - UITextFieldDelegate Methods
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
-        if textField == email {
-            password.becomeFirstResponder()
-        } else if textField == password {
-            password.resignFirstResponder()
+        if textField == nameField {
+            emailField.becomeFirstResponder()
+        } else if textField == emailField {
+            emailField.resignFirstResponder()
+            passwordField.becomeFirstResponder()
+        } else {
+            passwordField.resignFirstResponder()
             self.signup(nil)
         }
         return true
@@ -83,9 +92,10 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.email.delegate = self
-        self.password.delegate = self
-        email.becomeFirstResponder()
+        self.nameField.delegate = self
+        self.emailField.delegate = self
+        self.passwordField.delegate = self
+        nameField.becomeFirstResponder()
     }
-
+    
 }

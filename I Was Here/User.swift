@@ -7,8 +7,7 @@
 //
 
 import Foundation
-import Firebase
-import FirebaseAuth
+import UIKit
 
 typealias completionHandler = (UIImage?)
 
@@ -17,31 +16,27 @@ class User {
     // MARK: Properties
     
     var uid: String?
+    var token: String?
     var email: String?
     var username: String?
     var name: String?
     var profileImageUrl: String?
     var places: [Place]?
-    private var isList = true // default
-    private var sendNotifications = true // defualt
+    var isList = true // default
+    var sendNotifications = true // defualt
     
     
     // MARK: - User Life Cycle
     
     // singelton user
-    static var user = User()
+    static var currentUser = User()
     
     private init() {
         
     }
-    static func getUser() -> User {
-        return user
+    static func getCurrentUser() -> User {
+        return currentUser
     }
-    func setData(authData: FIRUser) {
-        uid = authData.uid
-        email = authData.email!
-    }
-    
     
     // MARK: - User Settings
     
@@ -104,18 +99,18 @@ class User {
         return UIImage(named: "addPictures")
     }
     func getNumberOfMemoriesInFolder(index: Int) -> Int {
-        return places?[index].getPlaceMemories().count ?? 0
+        return places?[index].memories?.count ?? 0
     }
     func getMemoryImage(folderIndex: Int, memoryIndex: Int) -> UIImage {
         // TODO: - Given the folder index and memory index, return the picture attached to this memory.
-        if let _ = places?[folderIndex].getPlaceMemories()[memoryIndex].imageUrl {
+        if let _ = places?[folderIndex].memories?[memoryIndex].imageUrl {
             // ...
         }
         
         return UIImage()
     }
     func getMemoryDescription(folderIndex: Int, memoryIndex: Int) -> String {
-        return places?[folderIndex].getPlaceMemories()[memoryIndex].description ?? ""
+        return places?[folderIndex].memories?[memoryIndex].description ?? ""
     }
     
     

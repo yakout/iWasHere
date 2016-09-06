@@ -10,27 +10,13 @@ import Foundation
 
 
 class Place {
-    private var name: String
-    private var memories: [Memory]
+    var name: String?
+    var memories: [Memory]?
+    var memoriesCount: Int?
     
-    init(name: String, memories: [Memory]) {
+    init(name: String?, memories: [Memory]?, count: Int) {
         self.name = name
         self.memories = memories
-    }
-    
-    func getPlaceName() -> String {
-        return self.name
-    }
-    
-    func getPlaceMemories() -> [Memory] {
-        return self.memories
-    }
-    
-    func addMemory(memory: Memory) {
-        self.memories.append(memory)
-    }
-    
-    func deleteMemory(index: Int) {
-        self.memories.removeAtIndex(index)
+        self.memoriesCount = count
     }
 }
