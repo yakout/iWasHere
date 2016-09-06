@@ -58,18 +58,26 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Const.GridView, forIndexPath: indexPath)
-        cell.backgroundColor = chooseColor()
-        return cell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Const.GridView, forIndexPath: indexPath) as? MemoryCollectionViewCell
+
+        // cell.backgroundColor = chooseColor()
+        return cell!
     }
     
-    
-    func chooseColor() -> UIColor {
-        let r = CGFloat(drand48())
-        let g = CGFloat(drand48())
-        let b = CGFloat(drand48())
-        return UIColor(red: r, green: g, blue: b, alpha: 0.7)
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        if User.currentUser.isList {
+            return CGSize(width: 500, height: 400)
+        }
+        return CGSize(width: 125, height: 125)
     }
+
+    
+//    func chooseColor() -> UIColor {
+//        let r = CGFloat(drand48())
+//        let g = CGFloat(drand48())
+//        let b = CGFloat(drand48())
+//        return UIColor(red: r, green: g, blue: b, alpha: 0.7)
+//    }
 
     
 

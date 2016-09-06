@@ -65,7 +65,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                             let folder = folders[i] as? [String : AnyObject] ?? [:]
                             let placeName = folder["folderName"] as? String
                             let imagesCount = folder["imagesCount"] as! Int
-                            let images = folder["Images"] as? [AnyObject] ?? []
+                            let images = folder["images"] as? [AnyObject] ?? []
                             
                             var memories = [Memory]()
                             for j in 0 ..< imagesCount {

@@ -13,6 +13,8 @@
 		25D1C82B1D67EABC001A223F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25D1C82A1D67EABC001A223F /* Main.storyboard */; };
 		408FA3DE1D7F198400580743 /* MemoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FA3DD1D7F198400580743 /* MemoriesViewController.swift */; };
 		408FA3E01D7F2C7600580743 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FA3DF1D7F2C7600580743 /* UserDefaults.swift */; };
+		408FA3E21D7F6FA100580743 /* PlaceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FA3E11D7F6FA100580743 /* PlaceCollectionViewCell.swift */; };
+		408FA3E41D7F6FC600580743 /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FA3E31D7F6FC600580743 /* MemoryCollectionViewCell.swift */; };
 		4C10EF1D1D668497009C63F7 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C10EF1C1D668497009C63F7 /* ImageViewController.swift */; };
 		4C896BFB1D5EEB4700F32464 /* Pods_I_Was_Here.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C896BFA1D5EEB4700F32464 /* Pods_I_Was_Here.framework */; };
 		6316F0191D5768C200A2F2FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316F0181D5768C200A2F2FA /* AppDelegate.swift */; };
@@ -41,6 +43,8 @@
 		25D1C82A1D67EABC001A223F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		408FA3DD1D7F198400580743 /* MemoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoriesViewController.swift; sourceTree = "<group>"; };
 		408FA3DF1D7F2C7600580743 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		408FA3E11D7F6FA100580743 /* PlaceCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceCollectionViewCell.swift; sourceTree = "<group>"; };
+		408FA3E31D7F6FC600580743 /* MemoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCollectionViewCell.swift; sourceTree = "<group>"; };
 		4C10EF1C1D668497009C63F7 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		4C896BFA1D5EEB4700F32464 /* Pods_I_Was_Here.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_I_Was_Here.framework; path = "../../Library/Developer/Xcode/DerivedData/iWasHere-gtxtgaworrejcdcccukkxxnmrfzl/Build/Products/Debug-iphonesimulator/Pods_I_Was_Here.framework"; sourceTree = "<group>"; };
 		5CF9A415DB8D844812F19EDA /* Pods_I_Was_Here.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_I_Was_Here.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -125,6 +129,8 @@
 			children = (
 				25D1C82A1D67EABC001A223F /* Main.storyboard */,
 				6316F0241D5768C300A2F2FA /* LaunchScreen.storyboard */,
+				408FA3E11D7F6FA100580743 /* PlaceCollectionViewCell.swift */,
+				408FA3E31D7F6FC600580743 /* MemoryCollectionViewCell.swift */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -317,6 +323,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				63AF45C21D5BCFF100CD5B41 /* UIViewController+showErrorView.swift in Sources */,
+				408FA3E21D7F6FA100580743 /* PlaceCollectionViewCell.swift in Sources */,
 				63AF45CE1D5BEBAF00CD5B41 /* SignupViewController.swift in Sources */,
 				25760B761D638947006584D5 /* WallTableViewController+ViewMode.swift in Sources */,
 				408FA3DE1D7F198400580743 /* MemoriesViewController.swift in Sources */,
@@ -328,6 +335,7 @@
 				4C10EF1D1D668497009C63F7 /* ImageViewController.swift in Sources */,
 				636202F41D719E7F00969202 /* Annotation.swift in Sources */,
 				63AF45C51D5BD3B400CD5B41 /* Memory.swift in Sources */,
+				408FA3E41D7F6FC600580743 /* MemoryCollectionViewCell.swift in Sources */,
 				63AF45CB1D5BD3C600CD5B41 /* WallTableViewController.swift in Sources */,
 				408FA3E01D7F2C7600580743 /* UserDefaults.swift in Sources */,
 				63AA003F1D6074CC0023B4ED /* Place.swift in Sources */,

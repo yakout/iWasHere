@@ -9,6 +9,9 @@
 import UIKit
 import Alamofire
 
+
+var imageCache = NSCache()
+
 class WallViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     struct Const {
@@ -18,8 +21,6 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     // MARK: Properties
-    var user = User.getCurrentUser()
-    var isList: Bool!
     
     var places = [Place]() {
         didSet {
@@ -115,9 +116,11 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     
+    // MARK: - life cycles
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        places = User.currentUser.places!
         
         // Do any additional setup after loading the view.
     }
@@ -147,22 +150,61 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return places.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Const.GridView, forIndexPath: indexPath)
-        cell.backgroundColor = chooseColor()
-        return cell
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Const.GridView, forIndexPath: indexPath) as? PlaceCollectionViewCell
+        let tempImageNameToFetchLocatedInBaryAwesoneServerButItsNotIncludingInTheImagesObject = "14124157_1138265276229954_375787950_o"
+        let folder = places[indexPath.row]
+        let folderName = folder.name
+        let firstImageInFolder = folder.memories?[0].name
+        cell?.spinner.hidesWhenStopped = true
+        cell?.spinner.startAnimating()
+        
+        if let cachedImage = imageCache.objectForKey(tempImageNameToFetchLocatedInBaryAwesoneServerButItsNotIncludingInTheImagesObject) as? UIImage {
+            cell?.placeImage.image = cachedImage
+            cell?.placeName.text = folderName
+            cell?.spinner.stopAnimating()
+            return cell!
+        }
+        
+        Alamofire.request(.GET, "https://ec42e392.ngrok.io/image", parameters:[
+            "id":User.currentUser.uid ?? "2",
+            "token": User.currentUser.token ?? "",
+            "folderName": folderName ?? "",
+            "imageName": tempImageNameToFetchLocatedInBaryAwesoneServerButItsNotIncludingInTheImagesObject ?? "",
+            ])
+            .responseJSON { response in
+                let base64 = String(data:(response.data)!, encoding: NSUTF8StringEncoding)!
+                dispatch_async(dispatch_get_main_queue()) {
+                    if let image = UIImage(data: NSData(base64EncodedString: base64, options: [])!) {
+                        cell?.placeImage.image = image
+                        cell?.placeName.text = folderName
+                        cell?.spinner.stopAnimating()
+                        imageCache.setObject(image, forKey: tempImageNameToFetchLocatedInBaryAwesoneServerButItsNotIncludingInTheImagesObject)
+                    }
+                }
+        }
+        
+        // cell.backgroundColor = chooseColor() // for testing purposes
+        return cell!
     }
     
     
-    func chooseColor() -> UIColor {
-        let r = CGFloat(drand48())
-        let g = CGFloat(drand48())
-        let b = CGFloat(drand48())
-        return UIColor(red: r, green: g, blue: b, alpha: 0.7)
+    func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
+        if User.currentUser.isList {
+            return CGSize(width: 500, height: 400)
+        }
+        return CGSize(width: 125, height: 125)
     }
+    
+//    func chooseColor() -> UIColor {
+//        let r = CGFloat(drand48())
+//        let g = CGFloat(drand48())
+//        let b = CGFloat(drand48())
+//        return UIColor(red: r, green: g, blue: b, alpha: 0.7)
+//    }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
