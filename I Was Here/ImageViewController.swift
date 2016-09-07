@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import Alamofire
 
 class ImageViewController: UIViewController, UIScrollViewDelegate {
     
-    
+    var imageName: String?
+    var folderName: String?
     @IBOutlet weak var image:UIImageView?
     @IBOutlet weak var scrollView: UIScrollView! {
         didSet {
@@ -20,13 +22,55 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    
+    // MARK: - Actions
+    
+    @IBAction func done(sender: AnyObject?) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func deleteImage(sender: AnyObject) {
+        // delete from data base
+        
+        let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this picture? It will no longer be available", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+            action in
+            // delete
+            
+            // /folder/folderName/image/imageName
+            
+//            Alamofire.request(.DELETE, "https://ec42e392.ngrok.io/folder/\(self.folderName)/image/\(self.imageName)", parameters:[
+//                "id":User.currentUser.uid ?? "2",
+//                "token": User.currentUser.token ?? ""
+//                ])
+//                .responseJSON { response in
+//                    debugPrint(response)
+//
+//            }
+            self.done(nil)
+            })
+        
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: nil)) // do no thing
+        
+        presentViewController(alert, animated: true, completion: nil)
+    }
+    
+    @IBAction func save(sender: AnyObject) {
+        if let imageToBeSaved = image?.image {
+            UIImageWriteToSavedPhotosAlbum(imageToBeSaved, nil, nil, nil);
+        }
+    }
     func viewForZoomingInScrollView(scrollView: UIScrollView) -> UIView? {
         return image
     }
     
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let imageName = imageName {
+            image?.image = imageCache.objectForKey(imageName) as? UIImage
+        }
     }
-
+    
 }

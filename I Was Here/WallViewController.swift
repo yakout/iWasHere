@@ -158,11 +158,11 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         let tempImageNameToFetchLocatedInBaryAwesoneServerButItsNotIncludingInTheImagesObject = "14124157_1138265276229954_375787950_o"
         let folder = places[indexPath.row]
         let folderName = folder.name
-        let firstImageInFolder = folder.memories?[0].name
+        let firstImageInFolder = folder.memories?[0].name ?? ""
         cell?.spinner.hidesWhenStopped = true
         cell?.spinner.startAnimating()
         
-        if let cachedImage = imageCache.objectForKey(tempImageNameToFetchLocatedInBaryAwesoneServerButItsNotIncludingInTheImagesObject) as? UIImage {
+        if let cachedImage = imageCache.objectForKey(firstImageInFolder) as? UIImage {
             cell?.placeImage.image = cachedImage
             cell?.placeName.text = folderName
             cell?.spinner.stopAnimating()
@@ -173,16 +173,18 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
             "id":User.currentUser.uid ?? "2",
             "token": User.currentUser.token ?? "",
             "folderName": folderName ?? "",
-            "imageName": tempImageNameToFetchLocatedInBaryAwesoneServerButItsNotIncludingInTheImagesObject ?? "",
+            "imageName": firstImageInFolder ?? "",
             ])
             .responseJSON { response in
                 let base64 = String(data:(response.data)!, encoding: NSUTF8StringEncoding)!
                 dispatch_async(dispatch_get_main_queue()) {
-                    if let image = UIImage(data: NSData(base64EncodedString: base64, options: [])!) {
-                        cell?.placeImage.image = image
-                        cell?.placeName.text = folderName
-                        cell?.spinner.stopAnimating()
-                        imageCache.setObject(image, forKey: tempImageNameToFetchLocatedInBaryAwesoneServerButItsNotIncludingInTheImagesObject)
+                    if let data = NSData(base64EncodedString: base64, options: []) {
+                        if let image = UIImage(data: data) {
+                            cell?.placeImage.image = image
+                            cell?.placeName.text = folderName
+                            cell?.spinner.stopAnimating()
+                            imageCache.setObject(image, forKey: firstImageInFolder)
+                        }
                     }
                 }
         }
@@ -221,9 +223,9 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Pass the selected object to the new view controller.
         if segue.identifier == Const.folderSegue {
             if let dest = segue.destinationViewController as? MemoriesViewController {
-                
                 let index = (sender as! Int)
-                // dest.memories = places[index].getPlaceMemories()
+                dest.memories = places[index].memories!
+                dest.folderName = places[index].name!
             }
         }
     }

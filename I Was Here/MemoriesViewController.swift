@@ -7,18 +7,17 @@
 //
 
 import UIKit
+import Alamofire
 
 class MemoriesViewController: UIViewController,UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout {
     
     struct Const {
         static let GridView = "GridCellIdentifer"
+        static let showImageIdentifier = "showImage"
     }
     
-    var memories = [Memory]() {
-        didSet {
-            collectionView.reloadData()
-        }
-    }
+    var memories = [Memory]()
+    var folderName: String = ""
     
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -54,11 +53,47 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return memories.count
     }
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Const.GridView, forIndexPath: indexPath) as? MemoryCollectionViewCell
+        
+        let tempImageNameToFetchLocatedInBaryAwesoneServerButItsNotIncludingInTheImagesObject = "14124157_1138265276229954_375787950_o"
+        
+        let memory = memories[indexPath.row]
+        let memoryName =  memory.name ?? ""
+        let memoryDesc = memory.description ?? ""
+        
+        cell?.spinner.hidesWhenStopped = true
+        cell?.spinner.startAnimating()
+        
+        if let cachedImage = imageCache.objectForKey(memoryName) as? UIImage {
+            cell?.memoryImage.image = cachedImage
+            cell?.memoryName.text = memoryName
+            cell?.spinner.stopAnimating()
+            cell?.memoryDescription.text = memoryDesc
+            return cell!
+        }
+        
+        Alamofire.request(.GET, "https://ec42e392.ngrok.io/image", parameters:[
+            "id":User.currentUser.uid ?? "2",
+            "token": User.currentUser.token ?? "",
+            "folderName": folderName,
+            "imageName": memoryName ?? "",
+            ])
+            .responseJSON { response in
+                let base64 = String(data:(response.data)!, encoding: NSUTF8StringEncoding)!
+                dispatch_async(dispatch_get_main_queue()) {
+                    if let image = UIImage(data: NSData(base64EncodedString: base64, options: [])!) {
+                        cell?.memoryImage.image = image
+                        cell?.memoryName.text = memoryName
+                        cell?.spinner.stopAnimating()
+                        cell?.memoryDescription.text = memoryDesc
+                        imageCache.setObject(image, forKey: memoryName)
+                    }
+                }
+        }
 
         // cell.backgroundColor = chooseColor()
         return cell!
@@ -69,6 +104,12 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
             return CGSize(width: 500, height: 400)
         }
         return CGSize(width: 125, height: 125)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        if let cell = collectionView.cellForItemAtIndexPath(indexPath) {
+            performSegueWithIdentifier(Const.showImageIdentifier, sender: cell)
+        }
     }
 
     
@@ -81,14 +122,19 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
 
     
 
-    /*
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         // Get the new view controller using segue.destinationViewController.
         // Pass the selected object to the new view controller.
+        if segue.identifier == Const.showImageIdentifier {
+            if let dest = segue.destinationViewController as? ImageViewController {
+                let cell = sender as! MemoryCollectionViewCell
+                dest.imageName = cell.memoryName.text
+                dest.folderName = folderName
+            }
+        }
     }
-    */
 
 }

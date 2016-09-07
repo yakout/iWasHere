@@ -680,7 +680,7 @@
                     </view>
                     <connections>
                         <outlet property="collectionView" destination="wAN-b1-rRt" id="3Hf-2p-uxo"/>
-                        <segue destination="lJ9-3h-0iE" kind="show" identifier="showImage" id="UBE-zC-73p"/>
+                        <segue destination="lJ9-3h-0iE" kind="presentation" identifier="showImage" id="UBE-zC-73p"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CXV-zv-SDq" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -690,7 +690,7 @@
         <!--Image View Controller-->
         <scene sceneID="Usa-AZ-kaV">
             <objects>
-                <viewController hidesBottomBarWhenPushed="YES" id="lJ9-3h-0iE" customClass="ImageViewController" customModule="I_Was_Here" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="lJ9-3h-0iE" customClass="ImageViewController" customModule="I_Was_Here" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="dO0-E6-l27"/>
                         <viewControllerLayoutGuide type="bottom" id="Y6r-91-9Zw"/>
@@ -699,30 +699,67 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jl7-dm-JWL">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Urs-mn-CUu">
                                 <rect key="frame" x="0.0" y="64" width="600" height="492"/>
-                            </imageView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Urs-mn-CUu">
-                                <rect key="frame" x="0.0" y="64" width="600" height="492"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="jl7-dm-JWL">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="492"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="492" id="GJJ-qJ-x5z"/>
+                                        </constraints>
+                                    </imageView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="jl7-dm-JWL" secondAttribute="trailing" id="GA3-3j-iLc"/>
+                                    <constraint firstItem="jl7-dm-JWL" firstAttribute="leading" secondItem="Urs-mn-CUu" secondAttribute="leading" id="KIf-89-aQE"/>
+                                    <constraint firstAttribute="bottom" secondItem="jl7-dm-JWL" secondAttribute="bottom" id="W1W-rp-bMl"/>
+                                    <constraint firstItem="jl7-dm-JWL" firstAttribute="centerX" secondItem="Urs-mn-CUu" secondAttribute="centerX" id="kC3-Vh-Soc"/>
+                                    <constraint firstItem="jl7-dm-JWL" firstAttribute="top" secondItem="Urs-mn-CUu" secondAttribute="top" id="og4-7Q-ypb"/>
+                                </constraints>
                             </scrollView>
+                            <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="p2e-SL-HCP">
+                                <rect key="frame" x="0.0" y="20" width="600" height="44"/>
+                                <items>
+                                    <navigationItem title="Full Image" id="4UE-gl-cN3">
+                                        <barButtonItem key="leftBarButtonItem" style="done" systemItem="done" id="ern-ZW-JMz">
+                                            <connections>
+                                                <action selector="done:" destination="lJ9-3h-0iE" id="zkb-vt-3S8"/>
+                                            </connections>
+                                        </barButtonItem>
+                                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="Sos-94-i4a">
+                                            <connections>
+                                                <action selector="save:" destination="lJ9-3h-0iE" id="yI2-Rj-A2d"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rvY-SY-4pR">
+                                <rect key="frame" x="0.0" y="556" width="600" height="44"/>
+                                <items>
+                                    <barButtonItem systemItem="trash" id="mHH-J5-TdW">
+                                        <connections>
+                                            <action selector="deleteImage:" destination="lJ9-3h-0iE" id="hdC-lr-Rfq"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </items>
+                            </toolbar>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="jl7-dm-JWL" firstAttribute="bottom" secondItem="Y6r-91-9Zw" secondAttribute="top" id="4fr-U5-dCi"/>
-                            <constraint firstItem="Urs-mn-CUu" firstAttribute="bottom" secondItem="Y6r-91-9Zw" secondAttribute="top" id="HnP-f8-Ucz"/>
-                            <constraint firstItem="Urs-mn-CUu" firstAttribute="top" secondItem="dO0-E6-l27" secondAttribute="bottom" id="Ou1-n3-Hq5"/>
-                            <constraint firstItem="jl7-dm-JWL" firstAttribute="top" secondItem="Urs-mn-CUu" secondAttribute="top" id="bkA-ai-jtz"/>
-                            <constraint firstItem="jl7-dm-JWL" firstAttribute="trailing" secondItem="Urs-mn-CUu" secondAttribute="trailing" id="ggS-oc-9Gt"/>
-                            <constraint firstItem="jl7-dm-JWL" firstAttribute="leading" secondItem="Urs-mn-CUu" secondAttribute="leading" id="h46-QA-vrr"/>
-                            <constraint firstItem="Urs-mn-CUu" firstAttribute="leading" secondItem="7gf-QW-yec" secondAttribute="leading" id="kgB-la-thM"/>
-                            <constraint firstAttribute="trailing" secondItem="Urs-mn-CUu" secondAttribute="trailing" id="mQL-ag-tzN"/>
+                            <constraint firstItem="rvY-SY-4pR" firstAttribute="trailing" secondItem="Urs-mn-CUu" secondAttribute="trailing" id="742-Jr-ZRR"/>
+                            <constraint firstItem="p2e-SL-HCP" firstAttribute="bottom" secondItem="Urs-mn-CUu" secondAttribute="top" id="EmT-eX-KTK"/>
+                            <constraint firstItem="rvY-SY-4pR" firstAttribute="top" secondItem="Urs-mn-CUu" secondAttribute="bottom" id="O82-xa-jFQ"/>
+                            <constraint firstItem="Urs-mn-CUu" firstAttribute="bottom" secondItem="Y6r-91-9Zw" secondAttribute="top" constant="-44" id="cF7-8I-gGV"/>
+                            <constraint firstItem="rvY-SY-4pR" firstAttribute="leading" secondItem="Urs-mn-CUu" secondAttribute="leading" id="cw3-1D-PJ2"/>
+                            <constraint firstAttribute="trailing" secondItem="Urs-mn-CUu" secondAttribute="trailing" id="glS-WD-5DG"/>
+                            <constraint firstItem="Urs-mn-CUu" firstAttribute="leading" secondItem="7gf-QW-yec" secondAttribute="leading" id="hoW-7V-hT4"/>
+                            <constraint firstItem="Urs-mn-CUu" firstAttribute="top" secondItem="dO0-E6-l27" secondAttribute="bottom" constant="44" id="lZT-T5-BCe"/>
+                            <constraint firstItem="p2e-SL-HCP" firstAttribute="leading" secondItem="Urs-mn-CUu" secondAttribute="leading" id="ug8-mT-aD5"/>
+                            <constraint firstItem="p2e-SL-HCP" firstAttribute="trailing" secondItem="Urs-mn-CUu" secondAttribute="trailing" id="vc6-r0-YjC"/>
                         </constraints>
                     </view>
-                    <toolbarItems>
-                        <barButtonItem systemItem="action" id="Sos-94-i4a"/>
-                        <barButtonItem width="520" style="plain" systemItem="fixedSpace" id="DWQ-UI-hX1"/>
-                        <barButtonItem systemItem="trash" id="mHH-J5-TdW"/>
-                    </toolbarItems>
+                    <toolbarItems/>
                     <connections>
                         <outlet property="image" destination="jl7-dm-JWL" id="x06-QN-5MC"/>
                         <outlet property="scrollView" destination="Urs-mn-CUu" id="5dE-W0-hCs"/>
@@ -730,7 +767,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K7t-so-Z9Y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4389" y="386"/>
+            <point key="canvasLocation" x="4443" y="386"/>
         </scene>
         <!--Wall-->
         <scene sceneID="FHe-sb-Qt8">

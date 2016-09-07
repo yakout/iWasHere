@@ -86,12 +86,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                         
                         self?.performSegueWithIdentifier(Const.loginToWall, sender: nil)
                     } else {
-                        self?.showErrorView(response.result.value as? String)
+                        print(String(data: response.data!, encoding: NSUTF8StringEncoding))
+                        self?.showErrorView(String(data: response.data!, encoding: NSUTF8StringEncoding))
                     }
                 case .Failure(let error):
                     print(error)
                     let errorMessage = error.userInfo["NSLocalizedDescription"] as? String
                     self?.showErrorView(errorMessage)
+                    
+                    print(String(data: response.data!, encoding: NSUTF8StringEncoding))
+                    self?.showErrorView(String(data: response.data!, encoding: NSUTF8StringEncoding))
                 }
         }
     }
