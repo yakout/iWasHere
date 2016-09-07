@@ -32,17 +32,12 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
         let email = emailField.text
         let pass = passwordField.text
         
-        Alamofire.request(.POST, "https://ec42e392.ngrok.io/register/", parameters: [
+        Alamofire.request(.POST, "\(url)/register/", parameters: [
             "email": email ?? "",
             "password": pass ?? "",
             "name": name ?? ""
             ])
             .responseJSON { [weak self] response in
-                print(response.request)  // original URL request
-                print(response.response) // URL response
-                print(response.data)     // server data
-                print(response.result)   // result of response serialization
-                
                 debugPrint(response)
                 
                 switch response.result {
@@ -55,35 +50,6 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                         User.currentUser.name = JSON["name"] as? String
                         User.currentUser.token = JSON["token"] as? String
                         User.currentUser.profileImageUrl = JSON["profilePicture"] as? String
-                        let folders = JSON["folders"] as? [AnyObject] ?? []
-                        let foldersCount = JSON["foldersCount"] as! Int
-                        
-                        debugPrint(User.currentUser.token)
-                        debugPrint(folders, foldersCount)
-                        
-                        var places = [Place]()
-                        for i in 0 ..< foldersCount {
-                            let folder = folders[i] as? [String : AnyObject] ?? [:]
-                            let placeName = folder["folderName"] as? String
-                            let imagesCount = folder["imagesCount"] as! Int
-                            let images = folder["images"] as? [AnyObject] ?? []
-                            
-                            var memories = [Memory]()
-                            for j in 0 ..< imagesCount {
-                                let image = images[j] as? [String: AnyObject] ?? [:]
-                                let imageName = image["imageName"] as? String
-                                let imageDescription = image["imageDescription"] as? String
-                                let imageExtension = image["imageExtension"] as? String
-                                
-                                let memory = Memory(name: imageName, description: imageDescription, addedByUser: email, imageExtension: imageExtension)
-                                memories.append(memory)
-                            }
-                            
-                            let place = Place(name: placeName , memories: memories, count: foldersCount)
-                            places.append(place)
-                        }
-                        
-                        User.currentUser.places = places
                         
                         self?.performSegueWithIdentifier(Const.wallIdentifier, sender: nil)
                     } else {

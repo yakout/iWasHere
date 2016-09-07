@@ -22,7 +22,10 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
     
     @IBOutlet weak var collectionView: UICollectionView!
 
-
+    
+    
+    // MARK: life cycles
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -32,6 +35,12 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    
+    override func viewDidAppear(animated: Bool){
+        super.viewDidAppear(animated)
+        collectionView.reloadData()
     }
     
     // MARK: - UICollectionViewDelegateFlowLayout methods very important !!
@@ -76,8 +85,8 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
             return cell!
         }
         
-        Alamofire.request(.GET, "https://ec42e392.ngrok.io/image", parameters:[
-            "id":User.currentUser.uid ?? "2",
+        Alamofire.request(.GET, "\(url)/image", parameters:[
+            "id":User.currentUser.uid ?? "",
             "token": User.currentUser.token ?? "",
             "folderName": folderName,
             "imageName": memoryName ?? "",
@@ -85,12 +94,14 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
             .responseJSON { response in
                 let base64 = String(data:(response.data)!, encoding: NSUTF8StringEncoding)!
                 dispatch_async(dispatch_get_main_queue()) {
-                    if let image = UIImage(data: NSData(base64EncodedString: base64, options: [])!) {
-                        cell?.memoryImage.image = image
-                        cell?.memoryName.text = memoryName
-                        cell?.spinner.stopAnimating()
-                        cell?.memoryDescription.text = memoryDesc
-                        imageCache.setObject(image, forKey: memoryName)
+                    if let data = NSData(base64EncodedString: base64, options: []) {
+                        if let image = UIImage(data: data) {
+                            cell?.memoryImage.image = image
+                            cell?.memoryName.text = memoryName
+                            cell?.spinner.stopAnimating()
+                            cell?.memoryDescription.text = memoryDesc
+                            imageCache.setObject(image, forKey: memoryName)
+                        }
                     }
                 }
         }

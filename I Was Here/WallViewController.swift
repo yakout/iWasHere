@@ -10,7 +10,6 @@ import UIKit
 import Alamofire
 
 
-var imageCache = NSCache()
 
 class WallViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
@@ -64,6 +63,11 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         presentViewController(options, animated: true, completion: nil)
     }
     
+    @IBAction func deleteFolder(sender: AnyObject) {
+        
+    }
+    
+    
     // MARK: - UIImagePickerControllerDelegate Methods
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
@@ -89,28 +93,50 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func uploadPicture(pickedImage: UIImage) {
         // note there is uploading method in alamofire check it late
         
-        if let imageData = UIImagePNGRepresentation(pickedImage) {
+        // to know the image size
+        let imgData: NSData = NSData(data: UIImageJPEGRepresentation((pickedImage), 1)!)
+        // var imgData: NSData = UIImagePNGRepresentation(image)
+        // you can also replace UIImageJPEGRepresentation with UIImagePNGRepresentation.
+        let imageSize = imgData.length
+        print("size of image in KB: %f ", Double(imageSize)/1024.0)
+        
+        
+        if let imageData = UIImageJPEGRepresentation(pickedImage, 0.2) {
+            let imageDataSize = imageData.length
+            print("size of image in KB after compression: %f ", Double(imageDataSize)/1024.0)
+            
             
             let strBase64:String = imageData.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
             
-            Alamofire.request(.POST, "https://ec42e392.ngrok.io/image", parameters:[
-                "id":User.currentUser.uid ?? "2",
-                "token": User.currentUser.token ?? "",
-                "folderName":"test",
+            configuration.timeoutIntervalForRequest = 600
+            configuration.timeoutIntervalForResource = 600
+            alamoFireManager = Alamofire.Manager(configuration: configuration)
+            
+            Alamofire.request(.POST, "\(url)/image", parameters:[
+                "id":User.currentUser.uid!,
+                "token": User.currentUser.token!,
+                "folderName":"temp",
                 "imageName": NSUUID().UUIDString,
                 "imageDescription":"no description",
-                "extension":"png",
+                "extension":"jpg",
                 "data": strBase64
-                ])
-                .responseJSON { response in
+                ], encoding: .JSON)
+                .responseJSON { [weak self] response in
                     debugPrint(response)
-                    print(response.request)  // original URL request
-                    print(response.response) // URL response
-                    print(response.data)     // server data
-                    print(response.result)   // result of response serialization
-                    
-                    if let JSON = response.result.value {
-                        print("JSON: \(JSON)")
+                    switch response.result {
+                    case .Success:
+                        if let JSON = response.result.value {
+                            print("JSON: \(JSON)")
+                        } else {
+                            self?.showErrorView(String(data: response.data!, encoding: NSUTF8StringEncoding))
+                        }
+                        
+                        // update the current model and reload the data in the collection view
+                        
+                        self?.collectionView.reloadData()
+                        
+                    case .Failure(_):
+                        self?.showErrorView(String(data: response.data!, encoding: NSUTF8StringEncoding))
                     }
             }
         }
@@ -121,21 +147,21 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        places = User.currentUser.places!
-        
-        // Do any additional setup after loading the view.
+        places = User.currentUser.places ?? []
     }
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
+        // grid/list switching
+        
         if User.currentUser.isList != isList {
             collectionView.reloadData()
             isList = User.currentUser.isList
         }
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     
@@ -163,12 +189,21 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Const.GridView, forIndexPath: indexPath) as? PlaceCollectionViewCell
+        
+        // set value for button to know which buton for which cell has been pressed and should be deleted
+        cell?.delete.layer.setValue(indexPath.row, forKey: "index")
+        cell?.delete.addTarget(self, action: #selector(deletePlace(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        
         let tempImageNameToFetchLocatedInBaryAwesoneServerButItsNotIncludingInTheImagesObject = "14124157_1138265276229954_375787950_o"
+        
         let folder = places[indexPath.row]
         let folderName = folder.name
         let firstImageInFolder = folder.memories?[0].name ?? ""
+        
         cell?.spinner.hidesWhenStopped = true
         cell?.spinner.startAnimating()
+        cell?.placeName.text = folderName
+        
         
         if let cachedImage = imageCache.objectForKey(firstImageInFolder) as? UIImage {
             cell?.placeImage.image = cachedImage
@@ -177,25 +212,31 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
             return cell!
         }
         
-        Alamofire.request(.GET, "https://ec42e392.ngrok.io/image", parameters:[
-            "id":User.currentUser.uid ?? "2",
+        configuration.timeoutIntervalForRequest = 600
+        configuration.timeoutIntervalForResource = 600
+        alamoFireManager = Alamofire.Manager(configuration: configuration)
+        
+        Alamofire.request(.GET, "\(url)/image", parameters:[
+            "id":User.currentUser.uid ?? "",
             "token": User.currentUser.token ?? "",
             "folderName": folderName ?? "",
             "imageName": firstImageInFolder ?? "",
             ])
-            .responseJSON { response in
-                let base64 = String(data:(response.data)!, encoding: NSUTF8StringEncoding)!
-                dispatch_async(dispatch_get_main_queue()) {
-                    if let data = NSData(base64EncodedString: base64, options: []) {
-                        if let image = UIImage(data: data) {
-                            cell?.placeImage.image = image
-                            cell?.placeName.text = folderName
-                            cell?.spinner.stopAnimating()
-                            imageCache.setObject(image, forKey: firstImageInFolder)
+            .responseJSON { [weak self] response in
+                if let base64 = String(data:(response.data)!, encoding: NSUTF8StringEncoding) {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        if let data = NSData(base64EncodedString: base64, options: []) {
+                            if let image = UIImage(data: data) {
+                                cell?.placeImage.image = image
+                                cell?.placeName.text = folderName
+                                cell?.spinner.stopAnimating()
+                                imageCache.setObject(image, forKey: firstImageInFolder)
+                            }
                         }
                     }
                 }
         }
+        
         
         // cell.backgroundColor = chooseColor() // for testing purposes
         return cell!
@@ -209,16 +250,62 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         return CGSize(width: 125, height: 125)
     }
     
-//    func chooseColor() -> UIColor {
-//        let r = CGFloat(drand48())
-//        let g = CGFloat(drand48())
-//        let b = CGFloat(drand48())
-//        return UIColor(red: r, green: g, blue: b, alpha: 0.7)
-//    }
+    //    func chooseColor() -> UIColor {
+    //        let r = CGFloat(drand48())
+    //        let g = CGFloat(drand48())
+    //        let b = CGFloat(drand48())
+    //        return UIColor(red: r, green: g, blue: b, alpha: 0.7)
+    //    }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         print(indexPath.row)
         performSegueWithIdentifier(Const.folderSegue, sender: indexPath.row)
+    }
+    
+    
+    
+    func deletePlace(sender: UIButton) {
+        // delete folder from backend
+        
+        
+        
+        let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this folder? It will no longer be available", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
+            [weak self] action in
+            // delete
+            
+            if let folderIndex = (sender.layer.valueForKey("index")) as? Int {
+                
+                configuration.timeoutIntervalForRequest = 60
+                configuration.timeoutIntervalForResource = 60
+                alamoFireManager = Alamofire.Manager(configuration: configuration)
+                
+                let folderName = self?.places[folderIndex].name!
+                
+                Alamofire.request(.DELETE, "\(url)/folder/\(folderName!)", parameters:[
+                    "id":User.currentUser.uid ?? "",
+                    "token": User.currentUser.token ?? ""
+                    ], encoding: .JSON)
+                    .responseJSON { response in
+                        switch response.result {
+                        case .Success:
+                            break
+                        case .Failure(_):
+                            break
+                        }
+                }
+                self?.places.removeAtIndex(folderIndex)
+                self?.collectionView.reloadData()
+            }
+            })
+        
+        alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: nil)) // do no thing
+        
+        presentViewController(alert, animated: true, completion: nil)
+        
+        
+        
     }
     
     

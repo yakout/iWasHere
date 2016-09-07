@@ -9,8 +9,12 @@
 import UIKit
 import Alamofire
 
+
+let center = NSNotificationCenter.defaultCenter()
+var alamoFireManager : Alamofire.Manager?
+
+
 class ImageViewController: UIViewController, UIScrollViewDelegate {
-    
     var imageName: String?
     var folderName: String?
     @IBOutlet weak var image:UIImageView?
@@ -38,16 +42,16 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
             action in
             // delete
             
-            // /folder/folderName/image/imageName
-            
-//            Alamofire.request(.DELETE, "https://ec42e392.ngrok.io/folder/\(self.folderName)/image/\(self.imageName)", parameters:[
-//                "id":User.currentUser.uid ?? "2",
-//                "token": User.currentUser.token ?? ""
-//                ])
-//                .responseJSON { response in
-//                    debugPrint(response)
-//
-//            }
+            Alamofire.request(.DELETE, "\(url)/folder/\(self.folderName!)/image/\(self.imageName!)", parameters:[
+                "id":User.currentUser.uid ?? "",
+                "token": User.currentUser.token ?? ""
+                ], encoding: .JSON)
+                .responseJSON { response in
+                    debugPrint(response)
+                    
+                    print(String(data:response.data ?? NSData(), encoding: NSUTF8StringEncoding))
+
+            }
             self.done(nil)
             })
         

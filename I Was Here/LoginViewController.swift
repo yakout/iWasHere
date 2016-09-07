@@ -9,8 +9,12 @@
 import UIKit
 import Alamofire
 
-// url = "https://ec42e392.ngrok.io"
+let url = "https://3c2494b6.ngrok.io"
 let userDefaults = UserDefaults()
+var imageCache = NSCache()
+let configuration = NSURLSessionConfiguration.defaultSessionConfiguration()
+
+
 
 
 class LoginViewController: UIViewController, UITextFieldDelegate {
@@ -37,7 +41,9 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let email = textFieldLoginEmail.text
         let pass = textFieldLoginPassword.text
         
-        Alamofire.request(.POST, "https://ec42e392.ngrok.io/login", parameters: [
+        
+        // set the timeout
+        Alamofire.request(.POST, "\(url)/login", parameters: [
             "email": email ?? "",
             "password": pass ?? ""
             ])
@@ -49,7 +55,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     if let JSON = response.result.value as? [String: AnyObject] {
                         
                         User.currentUser.email = email
-                        User.currentUser.uid = JSON["id"] as? String
+                        User.currentUser.uid = String(JSON["id"] as! Int)
                         User.currentUser.isList = (JSON["listViewMode"] as? String) == "0" ? false : true
                         User.currentUser.name = JSON["name"] as? String
                         User.currentUser.token = JSON["token"] as? String

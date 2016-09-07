@@ -626,7 +626,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vac-hC-Usz">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Vac-hC-Usz">
                                                     <rect key="frame" x="0.0" y="49" width="200" height="151"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ff-mb-Zjk">
@@ -798,11 +798,11 @@
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="200"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gfr-16-uA5">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="gfr-16-uA5">
                                                     <rect key="frame" x="0.0" y="37" width="200" height="163"/>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="RDc-Ij-1hB">
-                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="29"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="162" height="34"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -810,6 +810,16 @@
                                                 <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="G1D-sL-x5G">
                                                     <rect key="frame" x="90" y="105" width="20" height="20"/>
                                                 </activityIndicatorView>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CoP-LE-IUd">
+                                                    <rect key="frame" x="170" y="0.0" width="30" height="34"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="23"/>
+                                                    <state key="normal" title="X">
+                                                        <color key="titleColor" red="1" green="0.0" blue="0.0093617555430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                    <connections>
+                                                        <action selector="deleteFolder:" destination="Sna-M6-lVO" eventType="touchUpInside" id="hO6-6y-UnH"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -823,6 +833,7 @@
                                         </constraints>
                                         <size key="customSize" width="200" height="200"/>
                                         <connections>
+                                            <outlet property="delete" destination="CoP-LE-IUd" id="AMy-Bg-yQd"/>
                                             <outlet property="placeImage" destination="gfr-16-uA5" id="foY-aS-9el"/>
                                             <outlet property="placeName" destination="RDc-Ij-1hB" id="F0J-Cc-Hih"/>
                                             <outlet property="spinner" destination="G1D-sL-x5G" id="ZdP-wq-Tfp"/>
@@ -898,7 +909,7 @@
                             <rect key="frame" x="0.0" y="64" width="600" height="293"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <string key="text">     An application that uses **your iphone's** camera and GPS for photography. The idea is to group your photos according to the place where you have taken these photos You will just write the name of a place or choose it and the photos in this place will be in front of you . Moreover your photos can be shared on social media **Facebook, Twitter and Instagram! ** Also you can choose to send your photos in that certain place to our servers  so that anyone else who visits this place and is using our app can see your photos.</string>
+                            <mutableString key="text">     An application that uses **your iphone's** camera and GPS for photography. The idea is to group your photos according to the place where you have taken these photos You will just write the name of a place or choose it and the photos in this place will be in front of you . Moreover your photos can be shared on social media **Facebook, Twitter and Instagram! ** Also you can choose to send your photos in that certain place to our servers  so that anyone else who visits this place and is using our app can see your photos.</mutableString>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>

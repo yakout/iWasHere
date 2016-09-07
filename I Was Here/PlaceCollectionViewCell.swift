@@ -10,11 +10,8 @@ import UIKit
 
 
 class PlaceCollectionViewCell: UICollectionViewCell {
-
     @IBOutlet weak var placeName: UILabel!
-
     @IBOutlet weak var placeImage: UIImageView!
-    
     @IBOutlet weak var spinner: UIActivityIndicatorView!
-    
+    @IBOutlet weak var delete: UIButton!
 }
