@@ -47,20 +47,56 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                 
                 switch response.result {
                 case .Success:
-                    print("Validation Successful")
-                    if let JSON = response.result.value {
-                        print("JSON: \(JSON)")
+                    if let JSON = response.result.value as? [String: AnyObject] {
                         
                         User.currentUser.email = email
-                        User.currentUser.name = name
-                        // User.currentUser.token = JSON["token"]
+                        User.currentUser.uid = JSON["id"] as? String
+                        User.currentUser.isList = (JSON["listViewMode"] as? String) == "0" ? false : true
+                        User.currentUser.name = JSON["name"] as? String
+                        User.currentUser.token = JSON["token"] as? String
+                        User.currentUser.profileImageUrl = JSON["profilePicture"] as? String
+                        let folders = JSON["folders"] as? [AnyObject] ?? []
+                        let foldersCount = JSON["foldersCount"] as! Int
+                        
+                        debugPrint(User.currentUser.token)
+                        debugPrint(folders, foldersCount)
+                        
+                        var places = [Place]()
+                        for i in 0 ..< foldersCount {
+                            let folder = folders[i] as? [String : AnyObject] ?? [:]
+                            let placeName = folder["folderName"] as? String
+                            let imagesCount = folder["imagesCount"] as! Int
+                            let images = folder["images"] as? [AnyObject] ?? []
+                            
+                            var memories = [Memory]()
+                            for j in 0 ..< imagesCount {
+                                let image = images[j] as? [String: AnyObject] ?? [:]
+                                let imageName = image["imageName"] as? String
+                                let imageDescription = image["imageDescription"] as? String
+                                let imageExtension = image["imageExtension"] as? String
+                                
+                                let memory = Memory(name: imageName, description: imageDescription, addedByUser: email, imageExtension: imageExtension)
+                                memories.append(memory)
+                            }
+                            
+                            let place = Place(name: placeName , memories: memories, count: foldersCount)
+                            places.append(place)
+                        }
+                        
+                        User.currentUser.places = places
                         
                         self?.performSegueWithIdentifier(Const.wallIdentifier, sender: nil)
+                    } else {
+                        print(String(data: response.data!, encoding: NSUTF8StringEncoding))
+                        self?.showErrorView(String(data: response.data!, encoding: NSUTF8StringEncoding))
                     }
                 case .Failure(let error):
                     print(error)
                     let errorMessage = error.userInfo["NSLocalizedDescription"] as? String
                     self?.showErrorView(errorMessage)
+                    
+                    print(String(data: response.data!, encoding: NSUTF8StringEncoding))
+                    self?.showErrorView(String(data: response.data!, encoding: NSUTF8StringEncoding))
                 }
         }
         

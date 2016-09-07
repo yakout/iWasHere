@@ -27,6 +27,7 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
             collectionView.reloadData()
         }
     }
+    var isList: Bool = true
     
     // MARK: - Outlets
     
@@ -125,6 +126,13 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // Do any additional setup after loading the view.
     }
     
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        if User.currentUser.isList != isList {
+            collectionView.reloadData()
+            isList = User.currentUser.isList
+        }
+    }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
