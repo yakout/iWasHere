@@ -132,15 +132,28 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         }
                         
                         // update the current model and reload the data in the collection view
-                        
-                        self?.collectionView.reloadData()
+                        if let error = User.currentUser.updateTheModel() {
+                            self?.showErrorView(error)
+                            self?.places = User.currentUser.places ?? []
+                            self?.collectionView.reloadData()
+                        } else {
+                            self?.places = User.currentUser.places ?? []
+                            self?.collectionView.reloadData()
+                            debugPrint(User.currentUser.places)
+                        }
                         
                     case .Failure(_):
+                        User.currentUser.updateTheModel()
+                        self?.places = User.currentUser.places ?? []
+                        self?.collectionView.reloadData()
                         self?.showErrorView(String(data: response.data!, encoding: NSUTF8StringEncoding))
                     }
             }
         }
     }
+    
+    
+   
     
     
     // MARK: - life cycles
@@ -321,6 +334,7 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 let index = (sender as! Int)
                 dest.memories = places[index].memories!
                 dest.folderName = places[index].name!
+                dest.folderIndex = index
             }
         }
     }

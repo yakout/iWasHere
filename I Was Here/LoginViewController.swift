@@ -42,7 +42,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         let pass = textFieldLoginPassword.text
         
         
-        // set the timeout
         Alamofire.request(.POST, "\(url)/login", parameters: [
             "email": email ?? "",
             "password": pass ?? ""

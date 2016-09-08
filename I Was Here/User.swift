@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Alamofire
 
 typealias completionHandler = (UIImage?)
 
@@ -113,5 +114,63 @@ class User {
         return places?[folderIndex].memories?[memoryIndex].description ?? ""
     }
     
+    
+    
+    func updateTheModel() -> String? {
+        var returnVlaue: String?
+        
+        let id = User.currentUser.uid
+        let token = User.currentUser.token
+        
+        Alamofire.request(.GET, "\(url)/user", parameters: [
+            "id": id ?? "",
+            "token": token ?? ""
+            ])
+            .responseJSON { response in
+                debugPrint(response)
+                
+                switch response.result {
+                case .Success:
+                    if let JSON = response.result.value as? [String: AnyObject] {
+                        let folders = JSON["folders"] as? [AnyObject] ?? []
+                        let foldersCount = JSON["foldersCount"] as! Int
+                        
+                        var places = [Place]()
+                        for i in 0 ..< foldersCount {
+                            let folder = folders[i] as? [String : AnyObject] ?? [:]
+                            let placeName = folder["folderName"] as? String
+                            let imagesCount = folder["imagesCount"] as! Int
+                            let images = folder["images"] as? [AnyObject] ?? []
+                            
+                            var memories = [Memory]()
+                            for j in 0 ..< imagesCount {
+                                let image = images[j] as? [String: AnyObject] ?? [:]
+                                let imageName = image["imageName"] as? String
+                                let imageDescription = image["imageDescription"] as? String
+                                let imageExtension = image["imageExtension"] as? String
+                                
+                                let memory = Memory(name: imageName, description: imageDescription, addedByUser: User.currentUser.email, imageExtension: imageExtension)
+                                memories.append(memory)
+                            }
+                            
+                            let place = Place(name: placeName , memories: memories, count: foldersCount)
+                            places.append(place)
+                        }
+                        
+                        User.currentUser.places = places
+                    } else {
+                        let message = String(data: response.data!, encoding: NSUTF8StringEncoding)
+                        returnVlaue = message ?? ""
+                    }
+                case .Failure(let error):
+                    print(error)
+                    let errorMessage = error.userInfo["NSLocalizedDescription"] as? String
+                    let errorMessage2 = String(data: response.data!, encoding: NSUTF8StringEncoding)
+                    returnVlaue = errorMessage ?? errorMessage2 ?? ""
+                }
+        }
+        
+        return returnVlaue
+    }
     
 }

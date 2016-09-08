@@ -18,6 +18,7 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
     
     var memories = [Memory]()
     var folderName: String = ""
+    var folderIndex : Int!
     
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -40,6 +41,7 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
     
     override func viewDidAppear(animated: Bool){
         super.viewDidAppear(animated)
+        memories = User.currentUser.places?[folderIndex].memories ?? []
         collectionView.reloadData()
     }
     
