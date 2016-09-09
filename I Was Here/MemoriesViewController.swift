@@ -19,7 +19,7 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
     var memories = [Memory]()
     var folderName: String = ""
     var folderIndex : Int!
-    
+    var refreshControl: UIRefreshControl!
     
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -30,7 +30,12 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "pull to fuck bary")
+        refreshControl.addTarget(self, action: #selector(MemoriesViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
+        
+        collectionView.addSubview(refreshControl) // not required when using UITableViewController
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -124,17 +129,26 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
             performSegueWithIdentifier(Const.showImageIdentifier, sender: cell)
         }
     }
+    
+    
+    // MARK: - helpers
+    
+    func refresh(sender:AnyObject) {
+        collectionView.reloadData()
+        sleep(4)
+        refreshControl.endRefreshing()
+    }
+
+    // for testing purposes
+    func chooseColor() -> UIColor {
+        let r = CGFloat(drand48())
+        let g = CGFloat(drand48())
+        let b = CGFloat(drand48())
+        return UIColor(red: r, green: g, blue: b, alpha: 0.7)
+    }
 
     
-//    func chooseColor() -> UIColor {
-//        let r = CGFloat(drand48())
-//        let g = CGFloat(drand48())
-//        let b = CGFloat(drand48())
-//        return UIColor(red: r, green: g, blue: b, alpha: 0.7)
-//    }
-
     
-
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation

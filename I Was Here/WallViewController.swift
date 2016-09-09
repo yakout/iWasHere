@@ -27,6 +27,7 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         }
     }
     var isList: Bool = true
+    var refreshControl: UIRefreshControl!
     
     // MARK: - Outlets
     
@@ -63,9 +64,6 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         presentViewController(options, animated: true, completion: nil)
     }
     
-    @IBAction func deleteFolder(sender: AnyObject) {
-        
-    }
     
     
     // MARK: - UIImagePickerControllerDelegate Methods
@@ -160,6 +158,13 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
+        refreshControl = UIRefreshControl()
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
+        refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: UIControlEvents.ValueChanged)
+        collectionView.addSubview(refreshControl)
+        
         places = User.currentUser.places ?? []
     }
     
@@ -281,7 +286,6 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         // delete folder from backend
         
         
-        
         let alert = UIAlertController(title: "Alert", message: "Are you sure you want to delete this folder? It will no longer be available", preferredStyle: UIAlertControllerStyle.Alert)
         
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
@@ -321,6 +325,12 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         
     }
     
+    
+    func refresh() {
+        collectionView.reloadData()
+        sleep(4)
+        refreshControl.endRefreshing()
+    }
     
     
     // MARK: - Navigation

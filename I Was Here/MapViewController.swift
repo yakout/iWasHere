@@ -9,7 +9,7 @@
 import UIKit
 import MapKit
 
-class ViewController: UIViewController, MKMapViewDelegate {
+class MapViewController: UIViewController, MKMapViewDelegate {
     
     // our model
     var memories: [Memory]? {
@@ -42,10 +42,10 @@ class ViewController: UIViewController, MKMapViewDelegate {
     func addAnnotaion() {
         var annotations = [MKAnnotation]()
         for memory in memories! {
-            if let annotation = memory.annotation {
-                mapView?.addAnnotation(annotation);
-                annotations.append(annotation)
-            }
+//            if let annotation = memory.annotation {
+//                mapView?.addAnnotation(annotation);
+//                annotations.append(annotation)
+//            }
         }
         mapView?.showAnnotations(annotations, animated: true);
     }
@@ -92,9 +92,24 @@ class ViewController: UIViewController, MKMapViewDelegate {
     // MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        let annotation = Annotation(title: "iYakout House", subtitle: "Test Test", longitude: 30.063824, latitude: 31.312353)
-        mapView.addAnnotation(annotation)
-        mapView.showAnnotations([annotation], animated: true)
+        
+        
+        let latitude:CLLocationDegrees = 31.312353
+        let longitude:CLLocationDegrees = 30.063824
+        
+        let location:CLLocationCoordinate2D = CLLocationCoordinate2DMake(latitude, longitude)
+        
+        let span:MKCoordinateSpan = MKCoordinateSpanMake(1, 1)
+        
+        let region:MKCoordinateRegion = MKCoordinateRegionMake(location, span)
+        
+        mapView.setRegion(region, animated: true)
+        
+        let myAn1 = Place(title: "Office", coordinate: location, subtitle: "MyOffice", name: nil, memories: nil, count: 0);
+        
+        mapView.addAnnotation(myAn1);
+        mapView.showAnnotations([myAn1], animated: true)
+        
     }
 }
 

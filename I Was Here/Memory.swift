@@ -16,24 +16,7 @@ class Memory {
     var imageExtension: String?
     
     var thumbnailUrl: String?
-    var imageUrl: String?
-    
-    var latitude: Double?
-    var longitude: Double?
-    
-    var annotation: Annotation? {
-        get {
-            return self.annotation
-        }
-        set {
-            if let loc = newValue {
-                // annotation = Annotation(title: name!, subtitle: description!, longitude: loc[0], latitude: loc[1])
-            } else {
-                self.annotation = nil
-            }
-        }
-    }
-    
+    var imageUrl: String?   
     
     init(name: String?, description: String?, addedByUser: String?, imageExtension: String?) {
         self.name = name

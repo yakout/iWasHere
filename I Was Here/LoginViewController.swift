@@ -83,7 +83,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                                 memories.append(memory)
                             }
                             
-                            let place = Place(name: placeName , memories: memories, count: foldersCount)
+                            let place = Place(title: nil, coordinate: nil, subtitle: nil, name: placeName , memories: memories, count: foldersCount)
                             places.append(place)
                         }
                         

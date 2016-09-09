@@ -526,7 +526,7 @@
         <!--search-->
         <scene sceneID="76A-yV-Yps">
             <objects>
-                <viewController id="dqn-fC-tf5" sceneMemberID="viewController">
+                <viewController id="dqn-fC-tf5" customClass="MapViewController" customModule="I_Was_Here" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="7Hc-Ki-j67"/>
                         <viewControllerLayoutGuide type="bottom" id="rxF-Zx-PeD"/>
@@ -548,6 +548,9 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="search" image="search" id="TDf-U7-4wO"/>
+                    <connections>
+                        <outlet property="mapView" destination="cto-eM-jTd" id="Vre-32-hOz"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="y4D-9G-cqc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -595,7 +598,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="t5u-cz-LPV" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2294" y="386"/>
+            <point key="canvasLocation" x="2295" y="392"/>
         </scene>
         <!--Memories View Controller-->
         <scene sceneID="kJI-CZ-Gny">
@@ -816,9 +819,6 @@
                                                     <state key="normal" title="X">
                                                         <color key="titleColor" red="1" green="0.0" blue="0.0093617555430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     </state>
-                                                    <connections>
-                                                        <action selector="deleteFolder:" destination="Sna-M6-lVO" eventType="touchUpInside" id="hO6-6y-UnH"/>
-                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -878,7 +878,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RlJ-kW-5te" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="3UP-ab-Bp7" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3010" y="386"/>
+            <point key="canvasLocation" x="2964" y="386"/>
         </scene>
         <!--Settings-->
         <scene sceneID="LZw-IM-GAS">
@@ -909,7 +909,7 @@
                             <rect key="frame" x="0.0" y="64" width="600" height="293"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                            <mutableString key="text">     An application that uses **your iphone's** camera and GPS for photography. The idea is to group your photos according to the place where you have taken these photos You will just write the name of a place or choose it and the photos in this place will be in front of you . Moreover your photos can be shared on social media **Facebook, Twitter and Instagram! ** Also you can choose to send your photos in that certain place to our servers  so that anyone else who visits this place and is using our app can see your photos.</mutableString>
+                            <string key="text">     An application that uses **your iphone's** camera and GPS for photography. The idea is to group your photos according to the place where you have taken these photos You will just write the name of a place or choose it and the photos in this place will be in front of you . Moreover your photos can be shared on social media **Facebook, Twitter and Instagram! ** Also you can choose to send your photos in that certain place to our servers  so that anyone else who visits this place and is using our app can see your photos.</string>
                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                             <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                         </textView>

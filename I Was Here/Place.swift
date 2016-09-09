@@ -7,16 +7,26 @@
 //
 
 import Foundation
+import MapKit
 
-
-class Place {
-    var name: String?
-    var memories: [Memory]?
-    var memoriesCount: Int?
+class Place: NSObject, MKAnnotation {
+    var coordinate: CLLocationCoordinate2D
     
-    init(name: String?, memories: [Memory]?, count: Int) {
+    var title: String?
+    var subtitle: String?
+    
+    
+    init(title: String?, coordinate: CLLocationCoordinate2D?, subtitle: String?, name: String?, memories: [Memory]?, count: Int) {
+        self.title = title
+        self.subtitle = subtitle
+        self.coordinate = coordinate ?? CLLocationCoordinate2D()
         self.name = name
         self.memories = memories
         self.memoriesCount = count
     }
+
+    var name: String?
+    var memories: [Memory]?
+    var memoriesCount: Int?
+
 }
