@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 import Alamofire
 
-typealias completionHandler = (UIImage?)
+typealias completionHandler = ([Place]?, String?) -> Void
 
 class User {
     
@@ -116,7 +116,7 @@ class User {
     
     
     
-    func updateTheModel() -> String? {
+    func updateTheModel(completion: completionHandler) {
         var returnVlaue: String?
         
         let id = User.currentUser.uid
@@ -148,12 +148,14 @@ class User {
                                 let imageName = image["imageName"] as? String
                                 let imageDescription = image["imageDescription"] as? String
                                 let imageExtension = image["imageExtension"] as? String
+                                let latitude = image["latitude"] as? Double
+                                let longitude = image["longitude"] as? Double
                                 
-                                let memory = Memory(name: imageName, description: imageDescription, addedByUser: User.currentUser.email, imageExtension: imageExtension)
+                                let memory = Memory(name: imageName, description: imageDescription, addedByUser: User.currentUser.email, imageExtension: imageExtension, latitude: latitude, longitude: longitude)
                                 memories.append(memory)
                             }
                             
-                            let place = Place(title: nil, coordinate: nil, subtitle: nil, name: placeName, memories: memories, count: foldersCount)
+                            let place = Place(name: placeName, memories: memories, count: foldersCount)
                             places.append(place)
                         }
                         
@@ -168,9 +170,10 @@ class User {
                     let errorMessage2 = String(data: response.data!, encoding: NSUTF8StringEncoding)
                     returnVlaue = errorMessage ?? errorMessage2 ?? ""
                 }
+                
+                completion(User.currentUser.places, returnVlaue)
         }
         
-        return returnVlaue
     }
     
 }

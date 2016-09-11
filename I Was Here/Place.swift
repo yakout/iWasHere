@@ -9,17 +9,9 @@
 import Foundation
 import MapKit
 
-class Place: NSObject, MKAnnotation {
-    var coordinate: CLLocationCoordinate2D
+class Place {
     
-    var title: String?
-    var subtitle: String?
-    
-    
-    init(title: String?, coordinate: CLLocationCoordinate2D?, subtitle: String?, name: String?, memories: [Memory]?, count: Int) {
-        self.title = title
-        self.subtitle = subtitle
-        self.coordinate = coordinate ?? CLLocationCoordinate2D()
+    init(name: String?, memories: [Memory]?, count: Int) {
         self.name = name
         self.memories = memories
         self.memoriesCount = count

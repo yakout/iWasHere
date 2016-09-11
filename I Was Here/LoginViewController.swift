@@ -78,12 +78,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                                 let imageName = image["imageName"] as? String
                                 let imageDescription = image["imageDescription"] as? String
                                 let imageExtension = image["imageExtension"] as? String
+                                let latitude = image["latitude"] as? Double
+                                let longitude = image["longitude"] as? Double
                                 
-                                let memory = Memory(name: imageName, description: imageDescription, addedByUser: email, imageExtension: imageExtension)
+                                let memory = Memory(name: imageName, description: imageDescription, addedByUser: email, imageExtension: imageExtension, latitude: latitude, longitude: longitude)
                                 memories.append(memory)
                             }
                             
-                            let place = Place(title: nil, coordinate: nil, subtitle: nil, name: placeName , memories: memories, count: foldersCount)
+                            let place = Place(name: placeName , memories: memories, count: foldersCount)
                             places.append(place)
                         }
                         
@@ -133,7 +135,6 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         User.currentUser.email = userDefaults.userInfo["email"] as? String
         User.currentUser.name = userDefaults.userInfo["name"] as? String
         
-        let foo = userDefaults.userInfo
         
         if let token = User.currentUser.token where token != "" {
             print("user already signed in with email go directly to home")

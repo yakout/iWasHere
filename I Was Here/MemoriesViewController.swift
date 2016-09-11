@@ -31,7 +31,7 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
         super.viewDidLoad()
 
         refreshControl = UIRefreshControl()
-        refreshControl.attributedTitle = NSAttributedString(string: "pull to fuck bary")
+        refreshControl.attributedTitle = NSAttributedString(string: "pull to refresh")
         refreshControl.addTarget(self, action: #selector(MemoriesViewController.refresh(_:)), forControlEvents: UIControlEvents.ValueChanged)
         
         collectionView.addSubview(refreshControl) // not required when using UITableViewController
@@ -74,9 +74,7 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier(Const.GridView, forIndexPath: indexPath) as? MemoryCollectionViewCell
-        
-        let tempImageNameToFetchLocatedInBaryAwesoneServerButItsNotIncludingInTheImagesObject = "14124157_1138265276229954_375787950_o"
-        
+                
         let memory = memories[indexPath.row]
         let memoryName =  memory.name ?? ""
         let memoryDesc = memory.description ?? ""
@@ -86,7 +84,7 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
         
         if let cachedImage = imageCache.objectForKey(memoryName) as? UIImage {
             cell?.memoryImage.image = cachedImage
-            cell?.memoryName.text = memoryName
+            cell?.memoryName = memoryName
             cell?.spinner.stopAnimating()
             cell?.memoryDescription.text = memoryDesc
             return cell!
@@ -104,7 +102,7 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
                     if let data = NSData(base64EncodedString: base64, options: []) {
                         if let image = UIImage(data: data) {
                             cell?.memoryImage.image = image
-                            cell?.memoryName.text = memoryName
+                            cell?.memoryName = memoryName
                             cell?.spinner.stopAnimating()
                             cell?.memoryDescription.text = memoryDesc
                             imageCache.setObject(image, forKey: memoryName)
@@ -158,7 +156,7 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
         if segue.identifier == Const.showImageIdentifier {
             if let dest = segue.destinationViewController as? ImageViewController {
                 let cell = sender as! MemoryCollectionViewCell
-                dest.imageName = cell.memoryName.text
+                dest.imageName = cell.memoryName
                 dest.folderName = folderName
             }
         }

@@ -15,13 +15,18 @@ class Memory {
     var addedByUser: String?
     var imageExtension: String?
     
+    var latitude: Double?
+    var longitude: Double?
+    
     var thumbnailUrl: String?
     var imageUrl: String?   
     
-    init(name: String?, description: String?, addedByUser: String?, imageExtension: String?) {
+    init(name: String?, description: String?, addedByUser: String?, imageExtension: String?, latitude: Double?, longitude: Double?) {
         self.name = name
         self.description = description
         self.addedByUser = addedByUser
         self.imageExtension = imageExtension
+        self.latitude = latitude
+        self.longitude = longitude
     }
 }

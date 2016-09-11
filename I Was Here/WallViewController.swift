@@ -8,7 +8,9 @@
 
 import UIKit
 import Alamofire
-
+import AssetsLibrary
+import CoreLocation
+import MapKit
 
 
 class WallViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -17,6 +19,7 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         static let logoutSegueIdentifier = "logout"
         static let GridView = "GridCellIdentifer"
         static let folderSegue = "openFolderSegue"
+        static let showPhotoEditor = "showPhotoEditor"
     }
     
     // MARK: Properties
@@ -28,6 +31,11 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     var isList: Bool = true
     var refreshControl: UIRefreshControl!
+    var locationManager: CLLocationManager! {
+        didSet {
+            locationManager.delegate = self
+        }
+    }
     
     // MARK: - Outlets
     
@@ -75,83 +83,34 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
         var pickedImage: UIImage?
+        let library = ALAssetsLibrary()
+        let url: NSURL = info[UIImagePickerControllerReferenceURL] as! NSURL
+        
+        
         if let pickedEditedImage = info[UIImagePickerControllerEditedImage] as? UIImage {
             pickedImage = pickedEditedImage
         } else if let pickedOriginalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             pickedImage = pickedOriginalImage
         }
-        dismissViewControllerAnimated(true, completion: nil)
         
-        uploadPicture(pickedImage!)
-    }
-    
-    
-    // MARK: helpers
-    
-    func uploadPicture(pickedImage: UIImage) {
-        // note there is uploading method in alamofire check it late
-        
-        // to know the image size
-        let imgData: NSData = NSData(data: UIImageJPEGRepresentation((pickedImage), 1)!)
-        // var imgData: NSData = UIImagePNGRepresentation(image)
-        // you can also replace UIImageJPEGRepresentation with UIImagePNGRepresentation.
-        let imageSize = imgData.length
-        print("size of image in KB: %f ", Double(imageSize)/1024.0)
-        
-        
-        if let imageData = UIImageJPEGRepresentation(pickedImage, 0.2) {
-            let imageDataSize = imageData.length
-            print("size of image in KB after compression: %f ", Double(imageDataSize)/1024.0)
-            
-            
-            let strBase64:String = imageData.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
-            
-            configuration.timeoutIntervalForRequest = 600
-            configuration.timeoutIntervalForResource = 600
-            alamoFireManager = Alamofire.Manager(configuration: configuration)
-            
-            Alamofire.request(.POST, "\(url)/image", parameters:[
-                "id":User.currentUser.uid!,
-                "token": User.currentUser.token!,
-                "folderName":"temp",
-                "imageName": NSUUID().UUIDString,
-                "imageDescription":"no description",
-                "extension":"jpg",
-                "data": strBase64
-                ], encoding: .JSON)
-                .responseJSON { [weak self] response in
-                    debugPrint(response)
-                    switch response.result {
-                    case .Success:
-                        if let JSON = response.result.value {
-                            print("JSON: \(JSON)")
-                        } else {
-                            self?.showErrorView(String(data: response.data!, encoding: NSUTF8StringEncoding))
-                        }
-                        
-                        // update the current model and reload the data in the collection view
-                        if let error = User.currentUser.updateTheModel() {
-                            self?.showErrorView(error)
-                            self?.places = User.currentUser.places ?? []
-                            self?.collectionView.reloadData()
-                        } else {
-                            self?.places = User.currentUser.places ?? []
-                            self?.collectionView.reloadData()
-                            debugPrint(User.currentUser.places)
-                        }
-                        
-                    case .Failure(_):
-                        User.currentUser.updateTheModel()
-                        self?.places = User.currentUser.places ?? []
-                        self?.collectionView.reloadData()
-                        self?.showErrorView(String(data: response.data!, encoding: NSUTF8StringEncoding))
-                    }
+        // code to extract location from photo it will only work for photo taken by iphone or the camera app ..
+        library.assetForURL(url, resultBlock: {
+            (asset: ALAsset!) in
+            if asset.valueForProperty(ALAssetPropertyLocation) != nil {
+                let lat = (asset.valueForProperty(ALAssetPropertyLocation) as? CLLocation)!.coordinate.latitude
+                let lang = (asset.valueForProperty(ALAssetPropertyLocation) as? CLLocation)!.coordinate.longitude
+                print(lat, lang)
             }
-        }
+            }, failureBlock: {
+                (error: NSError!) in
+                NSLog("Error!")
+        })
+        
+        dismissViewControllerAnimated(true, completion: nil)
+        performSegueWithIdentifier(Const.showPhotoEditor, sender: pickedImage)
+        // upload function has moved from here
     }
     
-    
-   
     
     
     // MARK: - life cycles
@@ -159,6 +118,7 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setUpNotifications()
         
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
@@ -212,8 +172,6 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell?.delete.layer.setValue(indexPath.row, forKey: "index")
         cell?.delete.addTarget(self, action: #selector(deletePlace(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
-        let tempImageNameToFetchLocatedInBaryAwesoneServerButItsNotIncludingInTheImagesObject = "14124157_1138265276229954_375787950_o"
-        
         let folder = places[indexPath.row]
         let folderName = folder.name
         let firstImageInFolder = folder.memories?[0].name ?? ""
@@ -234,6 +192,7 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         configuration.timeoutIntervalForResource = 600
         alamoFireManager = Alamofire.Manager(configuration: configuration)
         
+        let token = User.currentUser.token
         Alamofire.request(.GET, "\(url)/image", parameters:[
             "id":User.currentUser.uid ?? "",
             "token": User.currentUser.token ?? "",
@@ -318,18 +277,174 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
             })
         
         alert.addAction(UIAlertAction(title: "No", style: UIAlertActionStyle.Default, handler: nil)) // do no thing
-        
         presentViewController(alert, animated: true, completion: nil)
-        
-        
         
     }
     
     
     func refresh() {
-        collectionView.reloadData()
-        sleep(4)
-        refreshControl.endRefreshing()
+        User.currentUser.updateTheModel() { [weak self] (updatedPlaces,recievedMessage) in
+            dispatch_async(dispatch_get_main_queue()) {
+                self?.showErrorView(recievedMessage)
+                self?.refreshControl.endRefreshing()
+                self?.places = updatedPlaces!
+                self?.collectionView.reloadData()
+            }
+        }
+    }
+    
+    func setUpNotifications() {
+        locationManager = CLLocationManager()
+        
+        // important must add "UIBackgroundModes" in info plist and add "location" in the array or the app will crash
+        locationManager.allowsBackgroundLocationUpdates = true
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest //  kCLLocationAccuracyHundredMeters to conserve battery life.
+        
+        locationManager.requestAlwaysAuthorization()
+        // locationManager.requestWhenInUseAuthorization()
+        
+        // locationManager.startUpdatingLocation()
+        locationManager.requestLocation()
+        
+        
+        // let the game begins!!
+        // since we are limited with 20 region to be tracked and get notification when user is enters the region we will do a little trick here with the help of Harvensine formula first we will cancel all registred notifications
+        UIApplication.sharedApplication().cancelAllLocalNotifications()
+        // now we have 20 region available we will choose the nearest region for current location of the user using Harvensine
+        
+        
+        let geocoder = CLGeocoder()
+        var regionsToBeRegistred:[CLCircularRegion] = [] // TODO: use NSMutableArray
+        let currentLocation = locationManager.location?.coordinate
+        var maximumDistInArray: Double?
+        for place in places {
+            var lat: Double!
+            var long: Double!
+            geocoder.geocodeAddressString(place.name!) { (placemarks,error) in
+                if error != nil {
+                    print(error)
+                    return
+                }
+                lat = placemarks?[0].location?.coordinate.latitude
+                long = placemarks?[0].location?.coordinate.longitude
+                
+            }
+            
+            let dist = haversine((currentLocation?.latitude)!, lon1: (currentLocation?.longitude)!, lat2: lat, lon2: long)
+            if let _ = maximumDistInArray {
+                if dist <= maximumDistInArray && !regionsToBeRegistred.isEmpty {
+                    let (latNortheast, lngNortheast, _, _) = fetchBoundries(place.name!)
+                    let radiusInKm = haversine((currentLocation?.latitude)!, lon1: (currentLocation?.longitude)!, lat2: latNortheast!, lon2: lngNortheast!)
+                    
+                    let regoin = CLCircularRegion(center: CLLocationCoordinate2D(latitude:
+                        lat, longitude: long), radius: radiusInKm * 100.0, identifier: "\(place.name!)")
+                    regionsToBeRegistred.append(regoin)
+                } else if !regionsToBeRegistred.isEmpty {
+                    maximumDistInArray = dist
+                    let (latNortheast, lngNortheast, _, _) = fetchBoundries(place.name!)
+                    let radiusInKm = haversine((currentLocation?.latitude)!, lon1: (currentLocation?.longitude)!, lat2: latNortheast!, lon2: lngNortheast!)
+                    
+                    let regoin = CLCircularRegion(center: CLLocationCoordinate2D(latitude:
+                        lat, longitude: long), radius: radiusInKm * 100.0, identifier: "\(place.name!)")
+                    regionsToBeRegistred.append(regoin)
+                } else {
+                    break
+                }
+            } else {
+                maximumDistInArray = dist
+                
+                
+                // here i should request "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=\(place.name!)" to know the boundries of a city (radius) note that you have  2500 request/day
+                
+                let (latNortheast, lngNortheast, _, _) = fetchBoundries(place.name!)
+                let radiusInKm = haversine((currentLocation?.latitude)!, lon1: (currentLocation?.longitude)!, lat2: latNortheast!, lon2: lngNortheast!)
+                
+                let regoin = CLCircularRegion(center: CLLocationCoordinate2D(latitude:
+                    lat, longitude: long), radius: radiusInKm * 100.0, identifier: "\(place.name!)")
+                regionsToBeRegistred.append(regoin)
+            }
+            
+        }
+        
+        //  testing values:
+        //        51.50998, -0.1337
+        //        lat:  31.3123825321504
+        //        long: 30.0638253624121
+        //        31.3124,30.0638
+        
+    }
+    
+    func fetchBoundries(address: String) -> (Double?, Double?, Double?, Double?) {
+        
+        let googleGeocodeApiUrlWithQuery = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=\(address)"
+        var latNortheast: Double?
+        var lngNortheast: Double?
+        var latSouthwest: Double?
+        var lngSouthwest: Double?
+        
+        Alamofire.request(.GET, googleGeocodeApiUrlWithQuery)
+            .responseJSON { [weak self] response in
+                debugPrint(response)
+                switch response.result {
+                case .Success:
+                    if let JSON = response.result.value as? [String: AnyObject] {
+                        print(JSON)
+                        let results = JSON["results"] as? [AnyObject] ?? []
+                        let firstResults = results.first as? [String: AnyObject] ?? [:]
+                        let geometry = firstResults["geometry"] as! [String: AnyObject]
+                        let bounds = geometry["bounds"] as! [String: AnyObject]
+                        let northeast = bounds["northeast"] as! [String: AnyObject]
+                        let southwest = bounds["southwest"] as! [String: AnyObject]
+                        
+                        latNortheast = northeast["lat"] as? Double
+                        lngNortheast = northeast["lng"] as? Double
+                        
+                        latSouthwest = southwest["lat"] as? Double
+                        lngSouthwest = southwest["lng"] as? Double
+                        
+                        
+                        
+                    } else {
+                        print(String(data: response.data!, encoding: NSUTF8StringEncoding))
+                        self?.showErrorView(String(data: response.data!, encoding: NSUTF8StringEncoding))
+                    }
+                case .Failure(let error):
+                    print(error)
+                    let errorMessage = error.userInfo["NSLocalizedDescription"] as? String
+                    self?.showErrorView(errorMessage)
+                    
+                    print(String(data: response.data!, encoding: NSUTF8StringEncoding))
+                    self?.showErrorView(String(data: response.data!, encoding: NSUTF8StringEncoding))
+                }
+        }
+        
+        return (latNortheast, lngNortheast, latSouthwest, lngSouthwest)
+        
+    }
+    
+    func registerForRegionNotifications(region: CLCircularRegion) {
+        region.notifyOnExit = false
+        let locattionnotification = UILocalNotification()
+        locattionnotification.alertBody = "You are near the past!"
+        locattionnotification.regionTriggersOnce = false
+        locattionnotification.region = region
+        UIApplication.sharedApplication().scheduleLocalNotification(locattionnotification)
+    }
+    
+    func haversine(lat1:Double, lon1:Double, lat2:Double, lon2:Double) -> Double {
+        let lat1rad = lat1 * M_PI/180
+        let lon1rad = lon1 * M_PI/180
+        let lat2rad = lat2 * M_PI/180
+        let lon2rad = lon2 * M_PI/180
+        
+        let dLat = lat2rad - lat1rad
+        let dLon = lon2rad - lon1rad
+        let a = sin(dLat/2) * sin(dLat/2) + sin(dLon/2) * sin(dLon/2) * cos(lat1rad) * cos(lat2rad)
+        let c = 2 * asin(sqrt(a))
+        let R = 6372.8
+        
+        return R * c
     }
     
     
@@ -346,7 +461,35 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 dest.folderName = places[index].name!
                 dest.folderIndex = index
             }
+        } else if segue.identifier == Const.showPhotoEditor {
+            if let dest = segue.destinationViewController as? PhotoEditorViewController {
+                let pickedImage = sender as! UIImage
+                dest.pickedImage = pickedImage
+            }
         }
     }
     
 }
+
+
+extension WallViewController: CLLocationManagerDelegate {
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == .AuthorizedWhenInUse {
+            locationManager.requestLocation()
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            print("current location: \(location)")
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("error: \(error)")
+    }
+    
+}
+
+
+

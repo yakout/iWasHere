@@ -51,7 +51,9 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
                     
                     print(String(data:response.data ?? NSData(), encoding: NSUTF8StringEncoding))
                     
-                    User.currentUser.updateTheModel()
+                    User.currentUser.updateTheModel() {_,_ in 
+                        
+                    }
 
             }
             self.done(nil)

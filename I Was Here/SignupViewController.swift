@@ -45,7 +45,7 @@ class SignupViewController: UIViewController, UITextFieldDelegate {
                     if let JSON = response.result.value as? [String: AnyObject] {
                         
                         User.currentUser.email = email
-                        User.currentUser.uid = JSON["id"] as? String
+                        User.currentUser.uid = String(JSON["id"] as? Int)
                         User.currentUser.isList = (JSON["listViewMode"] as? String) == "0" ? false : true
                         User.currentUser.name = JSON["name"] as? String
                         User.currentUser.token = JSON["token"] as? String

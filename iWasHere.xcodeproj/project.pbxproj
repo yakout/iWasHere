@@ -11,10 +11,15 @@
 		25D1C8231D6740EB001A223F /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D1C8221D6740EB001A223F /* SettingsViewController.swift */; };
 		25D1C8251D67A937001A223F /* SettingsContentsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25D1C8241D67A937001A223F /* SettingsContentsTableViewController.swift */; };
 		25D1C82B1D67EABC001A223F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 25D1C82A1D67EABC001A223F /* Main.storyboard */; };
+		403B93B61D8592DF0011A018 /* PhotoMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403B93B51D8592DF0011A018 /* PhotoMapViewController.swift */; };
+		403B93B81D85A3E40011A018 /* PhotoMapAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 403B93B71D85A3E40011A018 /* PhotoMapAnnotation.swift */; };
 		408FA3DE1D7F198400580743 /* MemoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FA3DD1D7F198400580743 /* MemoriesViewController.swift */; };
 		408FA3E01D7F2C7600580743 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FA3DF1D7F2C7600580743 /* UserDefaults.swift */; };
 		408FA3E21D7F6FA100580743 /* PlaceCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FA3E11D7F6FA100580743 /* PlaceCollectionViewCell.swift */; };
 		408FA3E41D7F6FC600580743 /* MemoryCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 408FA3E31D7F6FC600580743 /* MemoryCollectionViewCell.swift */; };
+		4097C9D21D833D47009870D2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4097C9D11D833D47009870D2 /* Constants.swift */; };
+		4097C9D41D834866009870D2 /* PhotoEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4097C9D31D834866009870D2 /* PhotoEditorViewController.swift */; };
+		4097C9D61D8374E1009870D2 /* LocationSearchTable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4097C9D51D8374E1009870D2 /* LocationSearchTable.swift */; };
 		4C10EF1D1D668497009C63F7 /* ImageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C10EF1C1D668497009C63F7 /* ImageViewController.swift */; };
 		4C896BFB1D5EEB4700F32464 /* Pods_I_Was_Here.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4C896BFA1D5EEB4700F32464 /* Pods_I_Was_Here.framework */; };
 		6316F0191D5768C200A2F2FA /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6316F0181D5768C200A2F2FA /* AppDelegate.swift */; };
@@ -39,10 +44,15 @@
 		25D1C8221D6740EB001A223F /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		25D1C8241D67A937001A223F /* SettingsContentsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsContentsTableViewController.swift; sourceTree = "<group>"; };
 		25D1C82A1D67EABC001A223F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		403B93B51D8592DF0011A018 /* PhotoMapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoMapViewController.swift; sourceTree = "<group>"; };
+		403B93B71D85A3E40011A018 /* PhotoMapAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoMapAnnotation.swift; sourceTree = "<group>"; };
 		408FA3DD1D7F198400580743 /* MemoriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoriesViewController.swift; sourceTree = "<group>"; };
 		408FA3DF1D7F2C7600580743 /* UserDefaults.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		408FA3E11D7F6FA100580743 /* PlaceCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceCollectionViewCell.swift; sourceTree = "<group>"; };
 		408FA3E31D7F6FC600580743 /* MemoryCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MemoryCollectionViewCell.swift; sourceTree = "<group>"; };
+		4097C9D11D833D47009870D2 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		4097C9D31D834866009870D2 /* PhotoEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotoEditorViewController.swift; sourceTree = "<group>"; };
+		4097C9D51D8374E1009870D2 /* LocationSearchTable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationSearchTable.swift; sourceTree = "<group>"; };
 		4C10EF1C1D668497009C63F7 /* ImageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageViewController.swift; sourceTree = "<group>"; };
 		4C896BFA1D5EEB4700F32464 /* Pods_I_Was_Here.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_I_Was_Here.framework; path = "../../Library/Developer/Xcode/DerivedData/iWasHere-gtxtgaworrejcdcccukkxxnmrfzl/Build/Products/Debug-iphonesimulator/Pods_I_Was_Here.framework"; sourceTree = "<group>"; };
 		5CF9A415DB8D844812F19EDA /* Pods_I_Was_Here.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_I_Was_Here.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -114,6 +124,8 @@
 				63AF45C41D5BD3B400CD5B41 /* User.swift */,
 				63AA003E1D6074CC0023B4ED /* Place.swift */,
 				408FA3DF1D7F2C7600580743 /* UserDefaults.swift */,
+				403B93B71D85A3E40011A018 /* PhotoMapAnnotation.swift */,
+				4097C9D11D833D47009870D2 /* Constants.swift */,
 				63AF459B1D58DD7600CD5B41 /* Core Data */,
 			);
 			name = Model;
@@ -141,7 +153,6 @@
 				25760B751D638947006584D5 /* WallTableViewController+ViewMode.swift */,
 				25D1C8221D6740EB001A223F /* SettingsViewController.swift */,
 				25D1C8241D67A937001A223F /* SettingsContentsTableViewController.swift */,
-				6330AF621D7080F6003263A1 /* MapViewController.swift */,
 				63CF66901D7B19DD00D3305F /* new */,
 			);
 			name = "View Controllers";
@@ -170,6 +181,10 @@
 			children = (
 				63CF66911D7B1A0B00D3305F /* WallViewController.swift */,
 				408FA3DD1D7F198400580743 /* MemoriesViewController.swift */,
+				4097C9D31D834866009870D2 /* PhotoEditorViewController.swift */,
+				4097C9D51D8374E1009870D2 /* LocationSearchTable.swift */,
+				6330AF621D7080F6003263A1 /* MapViewController.swift */,
+				403B93B51D8592DF0011A018 /* PhotoMapViewController.swift */,
 			);
 			name = new;
 			sourceTree = "<group>";
@@ -319,20 +334,25 @@
 				408FA3E21D7F6FA100580743 /* PlaceCollectionViewCell.swift in Sources */,
 				63AF45CE1D5BEBAF00CD5B41 /* SignupViewController.swift in Sources */,
 				25760B761D638947006584D5 /* WallTableViewController+ViewMode.swift in Sources */,
+				403B93B61D8592DF0011A018 /* PhotoMapViewController.swift in Sources */,
 				408FA3DE1D7F198400580743 /* MemoriesViewController.swift in Sources */,
+				4097C9D61D8374E1009870D2 /* LocationSearchTable.swift in Sources */,
 				6316F0211D5768C300A2F2FA /* I_Was_Here.xcdatamodeld in Sources */,
 				6316F0191D5768C200A2F2FA /* AppDelegate.swift in Sources */,
 				63CF66921D7B1A0B00D3305F /* WallViewController.swift in Sources */,
 				63AF45CA1D5BD3C600CD5B41 /* LoginViewController.swift in Sources */,
 				25D1C8231D6740EB001A223F /* SettingsViewController.swift in Sources */,
 				4C10EF1D1D668497009C63F7 /* ImageViewController.swift in Sources */,
+				4097C9D41D834866009870D2 /* PhotoEditorViewController.swift in Sources */,
 				63AF45C51D5BD3B400CD5B41 /* Memory.swift in Sources */,
 				408FA3E41D7F6FC600580743 /* MemoryCollectionViewCell.swift in Sources */,
 				63AF45CB1D5BD3C600CD5B41 /* WallTableViewController.swift in Sources */,
 				408FA3E01D7F2C7600580743 /* UserDefaults.swift in Sources */,
+				4097C9D21D833D47009870D2 /* Constants.swift in Sources */,
 				63AA003F1D6074CC0023B4ED /* Place.swift in Sources */,
 				6330AF631D7080F7003263A1 /* MapViewController.swift in Sources */,
 				25D1C8251D67A937001A223F /* SettingsContentsTableViewController.swift in Sources */,
+				403B93B81D85A3E40011A018 /* PhotoMapAnnotation.swift in Sources */,
 				63AF45C61D5BD3B400CD5B41 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

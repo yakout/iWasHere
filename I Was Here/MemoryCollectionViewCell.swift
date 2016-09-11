@@ -10,7 +10,7 @@ import UIKit
 
 class MemoryCollectionViewCell: UICollectionViewCell {
     
-    @IBOutlet weak var memoryName: UILabel!
+    var memoryName: String!
     @IBOutlet weak var memoryDescription: UILabel!
     @IBOutlet weak var memoryImage: UIImageView!
     @IBOutlet weak var spinner: UIActivityIndicatorView!
