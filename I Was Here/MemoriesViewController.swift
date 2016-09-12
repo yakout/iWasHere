@@ -87,6 +87,11 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
             cell?.memoryName = memoryName
             cell?.spinner.stopAnimating()
             cell?.memoryDescription.text = memoryDesc
+            
+            cell?.layer.cornerRadius = 10.0
+            cell?.layer.borderColor = UIColor.grayColor().CGColor
+            cell?.layer.borderWidth = 2
+            
             return cell!
         }
         
@@ -111,15 +116,19 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
                 }
         }
 
+        cell?.layer.cornerRadius = 10.0
+        cell?.layer.borderColor = UIColor.grayColor().CGColor
+        cell?.layer.borderWidth = 2
+        
         // cell.backgroundColor = chooseColor()
         return cell!
     }
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         if User.currentUser.isList {
-            return CGSize(width: 555.555, height: 722.222)
+            return CGSize(width: self.view.frame.width, height: self.view.frame.width + 100.0)
         }
-        return CGSize(width: 120, height: 156)
+        return CGSize(width: self.view.frame.width/3 - 2.0, height: self.view.frame.width/3 + 60.0)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

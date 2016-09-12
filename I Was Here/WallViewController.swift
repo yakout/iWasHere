@@ -94,8 +94,6 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
             pickedImage = pickedEditedImage
         } else if let pickedOriginalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             pickedImage = pickedOriginalImage
-        } else if let takenImage = info[UIImagePickerControllerCameraDevice] as? UIImage {
-            // TODO
         }
         
         // code to extract location from photo it will only work for photo taken by iphone or the camera app ..
@@ -115,7 +113,6 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         performSegueWithIdentifier(Const.showPhotoEditor, sender: pickedImage)
         // upload function has moved from here
     }
-    
     
     
     // MARK: - life cycles
@@ -211,6 +208,10 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
         cell?.spinner.startAnimating()
         cell?.placeName.text = folderName
         
+        cell?.layer.cornerRadius = 10.0
+        cell?.layer.borderColor = UIColor.grayColor().CGColor
+        cell?.layer.borderWidth = 2
+        
         
         if let cachedImage = imageCache.objectForKey(firstImageInFolder) as? UIImage {
             cell?.placeImage.image = cachedImage
@@ -253,9 +254,9 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         if User.currentUser.isList {
-            return CGSize(width: 555.555, height: 722.222)
+            return CGSize(width: self.view.frame.width, height: self.view.frame.width + 100.0)
         }
-        return CGSize(width: 120, height: 156)
+        return CGSize(width: self.view.frame.width/3 - 2.0, height: self.view.frame.width/3 + 60.0)
     }
     
     //    func chooseColor() -> UIColor {

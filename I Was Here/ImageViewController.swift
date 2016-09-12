@@ -42,7 +42,7 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
             action in
             // delete
             let encodedFolderName = self.folderName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
-            Alamofire.request(.DELETE, "\(url)/image?folderName=encodedFolderName&imageName=\(self.imageName!)", parameters:[
+            Alamofire.request(.DELETE, "\(url)/image?folderName=\(encodedFolderName)&imageName=\(self.imageName!)", parameters:[
                 "id":User.currentUser.uid ?? "",
                 "token": User.currentUser.token ?? ""
                 ], encoding: .JSON)
