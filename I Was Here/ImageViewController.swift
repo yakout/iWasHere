@@ -41,8 +41,8 @@ class ImageViewController: UIViewController, UIScrollViewDelegate {
         alert.addAction(UIAlertAction(title: "Yes", style: UIAlertActionStyle.Default) {
             action in
             // delete
-            
-            Alamofire.request(.DELETE, "\(url)/folder/\(self.folderName!)/image/\(self.imageName!)", parameters:[
+            let encodedFolderName = self.folderName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+            Alamofire.request(.DELETE, "\(url)/image?folderName=encodedFolderName&imageName=\(self.imageName!)", parameters:[
                 "id":User.currentUser.uid ?? "",
                 "token": User.currentUser.token ?? ""
                 ], encoding: .JSON)

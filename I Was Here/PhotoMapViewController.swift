@@ -27,10 +27,10 @@ class PhotoMapViewController: UIViewController {
         super.viewDidLoad()
         //  31.3124,30.0638
         // test
-        let coordinate = CLLocationCoordinate2D(latitude: 31.3124, longitude: 30.0638)
-        let annotaion1 = PhotoMapAnnotation(title: "title", coordinate: coordinate, subtitle: "subtilte", folderName: nil)
-        mapView.addAnnotation(annotaion1)
-        mapView.showAnnotations([annotaion1], animated: true)
+//        let coordinate = CLLocationCoordinate2D(latitude: 31.3124, longitude: 30.0638)
+//        let annotaion1 = PhotoMapAnnotation(title: "title", coordinate: coordinate, subtitle: "subtilte", folderName: nil)
+//        mapView.addAnnotation(annotaion1)
+//        mapView.showAnnotations([annotaion1], animated: true)
         
         let annotations = getAnnotations()
         mapView.addAnnotations(annotations)
@@ -51,6 +51,10 @@ class PhotoMapViewController: UIViewController {
                 let lng = memory.longitude!
                 let coordinates = CLLocationCoordinate2D(latitude: lat, longitude: lng)
                 let annotation = PhotoMapAnnotation(title: memory.name, coordinate: coordinates, subtitle: memory.description, folderName: place.name)
+                print("+++++++++++++++++++++++++++++++++")
+                print("new annotation is added with info: ")
+                print("title: \(memory.name) lat: \(lat) lng: \(lng) subtitle: \(memory.description) folderName: \(place.name)")
+                print("+++++++++++++++++++++++++++++++++")
                 annotations.append(annotation)
             }
         }

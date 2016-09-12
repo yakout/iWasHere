@@ -117,9 +117,9 @@ class MemoriesViewController: UIViewController,UICollectionViewDelegate, UIColle
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         if User.currentUser.isList {
-            return CGSize(width: 500, height: 400)
+            return CGSize(width: 555.555, height: 722.222)
         }
-        return CGSize(width: 125, height: 125)
+        return CGSize(width: 120, height: 156)
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

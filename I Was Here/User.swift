@@ -10,10 +10,9 @@ import Foundation
 import UIKit
 import Alamofire
 
-typealias completionHandler = ([Place]?, String?) -> Void
 
 class User {
-    
+    typealias completionHandler = ([Place]?, String?) -> Void
     // MARK: Properties
     
     var uid: String?

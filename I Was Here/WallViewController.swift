@@ -14,6 +14,7 @@ import MapKit
 
 
 class WallViewController: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource,UICollectionViewDelegateFlowLayout,UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    typealias completionHandler = (Double, Double, Double, Double) -> Void
     
     struct Const {
         static let logoutSegueIdentifier = "logout"
@@ -36,7 +37,9 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
             locationManager.delegate = self
         }
     }
-    
+    var currentLocationLat: Double?
+    var currentLocationLng: Double?
+    var notificationsDidSet = false
     // MARK: - Outlets
     
     @IBOutlet weak var collectionView: UICollectionView!
@@ -91,6 +94,8 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
             pickedImage = pickedEditedImage
         } else if let pickedOriginalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             pickedImage = pickedOriginalImage
+        } else if let takenImage = info[UIImagePickerControllerCameraDevice] as? UIImage {
+            // TODO
         }
         
         // code to extract location from photo it will only work for photo taken by iphone or the camera app ..
@@ -118,14 +123,40 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setUpNotifications()
-        
         refreshControl = UIRefreshControl()
         refreshControl.attributedTitle = NSAttributedString(string: "Pull to refresh")
         refreshControl.addTarget(self, action: #selector(refresh), forControlEvents: UIControlEvents.ValueChanged)
         collectionView.addSubview(refreshControl)
         
         places = User.currentUser.places ?? []
+        
+        
+        locationManager = CLLocationManager()
+        
+        // important must add "UIBackgroundModes" in info plist and add "location" in the array or the app will crash
+        locationManager.allowsBackgroundLocationUpdates = true
+        
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest //  kCLLocationAccuracyHundredMeters to conserve battery life.
+        
+        locationManager.requestAlwaysAuthorization()
+        // locationManager.requestWhenInUseAuthorization()
+        
+        locationManager.startUpdatingLocation()
+        // locationManager.requestLocation()
+        
+        
+        
+//        // T E S T             //        31.3124,30.0638
+//
+//        let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude:
+//            31.3124, longitude: 30.0638), radius: 30.0 * 100.0, identifier: "test")
+//        region.notifyOnExit = false
+//        let locattionnotification = UILocalNotification()
+//        locattionnotification.alertBody = "You are near the past!"
+//        locattionnotification.regionTriggersOnce = false
+//        locattionnotification.region = region
+//        UIApplication.sharedApplication().scheduleLocalNotification(locattionnotification)
+        
     }
     
     override func viewDidAppear(animated: Bool) {
@@ -222,9 +253,9 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
         if User.currentUser.isList {
-            return CGSize(width: 500, height: 400)
+            return CGSize(width: 555.555, height: 722.222)
         }
-        return CGSize(width: 125, height: 125)
+        return CGSize(width: 120, height: 156)
     }
     
     //    func chooseColor() -> UIColor {
@@ -259,7 +290,9 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 
                 let folderName = self?.places[folderIndex].name!
                 
-                Alamofire.request(.DELETE, "\(url)/folder/\(folderName!)", parameters:[
+                let encodedFolderName = folderName!.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+
+                Alamofire.request(.DELETE, "\(url)/folder?folderName=\(encodedFolderName)", parameters:[
                     "id":User.currentUser.uid ?? "",
                     "token": User.currentUser.token ?? ""
                     ], encoding: .JSON)
@@ -294,34 +327,20 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
     }
     
     func setUpNotifications() {
-        locationManager = CLLocationManager()
-        
-        // important must add "UIBackgroundModes" in info plist and add "location" in the array or the app will crash
-        locationManager.allowsBackgroundLocationUpdates = true
-        
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest //  kCLLocationAccuracyHundredMeters to conserve battery life.
-        
-        locationManager.requestAlwaysAuthorization()
-        // locationManager.requestWhenInUseAuthorization()
-        
-        // locationManager.startUpdatingLocation()
-        locationManager.requestLocation()
-        
-        
         // let the game begins!!
         // since we are limited with 20 region to be tracked and get notification when user is enters the region we will do a little trick here with the help of Harvensine formula first we will cancel all registred notifications
         UIApplication.sharedApplication().cancelAllLocalNotifications()
         // now we have 20 region available we will choose the nearest region for current location of the user using Harvensine
         
         
+        
         let geocoder = CLGeocoder()
         var regionsToBeRegistred:[CLCircularRegion] = [] // TODO: use NSMutableArray
-        let currentLocation = locationManager.location?.coordinate
         var maximumDistInArray: Double?
         for place in places {
             var lat: Double!
             var long: Double!
-            geocoder.geocodeAddressString(place.name!) { (placemarks,error) in
+            geocoder.geocodeAddressString(place.name!) { [weak self] (placemarks,error) in
                 if error != nil {
                     print(error)
                     return
@@ -329,59 +348,68 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
                 lat = placemarks?[0].location?.coordinate.latitude
                 long = placemarks?[0].location?.coordinate.longitude
                 
-            }
-            
-            let dist = haversine((currentLocation?.latitude)!, lon1: (currentLocation?.longitude)!, lat2: lat, lon2: long)
-            if let _ = maximumDistInArray {
-                if dist <= maximumDistInArray && !regionsToBeRegistred.isEmpty {
-                    let (latNortheast, lngNortheast, _, _) = fetchBoundries(place.name!)
-                    let radiusInKm = haversine((currentLocation?.latitude)!, lon1: (currentLocation?.longitude)!, lat2: latNortheast!, lon2: lngNortheast!)
-                    
-                    let regoin = CLCircularRegion(center: CLLocationCoordinate2D(latitude:
-                        lat, longitude: long), radius: radiusInKm * 100.0, identifier: "\(place.name!)")
-                    regionsToBeRegistred.append(regoin)
-                } else if !regionsToBeRegistred.isEmpty {
-                    maximumDistInArray = dist
-                    let (latNortheast, lngNortheast, _, _) = fetchBoundries(place.name!)
-                    let radiusInKm = haversine((currentLocation?.latitude)!, lon1: (currentLocation?.longitude)!, lat2: latNortheast!, lon2: lngNortheast!)
-                    
-                    let regoin = CLCircularRegion(center: CLLocationCoordinate2D(latitude:
-                        lat, longitude: long), radius: radiusInKm * 100.0, identifier: "\(place.name!)")
-                    regionsToBeRegistred.append(regoin)
+                let dist = self!.haversine(self!.currentLocationLat!, lon1: self!.currentLocationLng!, lat2: lat, lon2: long)
+                if let _ = maximumDistInArray {
+                    if dist <= maximumDistInArray && !regionsToBeRegistred.isEmpty {
+                        self!.fetchBoundries(place.name!) {
+                            (latNortheast, lngNortheast, _, _) in
+                            let radiusInKm = self!.haversine(self!.currentLocationLat!, lon1: self!.currentLocationLng!, lat2: latNortheast, lon2: lngNortheast)
+                            
+                            let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude:
+                                lat, longitude: long), radius: radiusInKm * 100.0, identifier: "\(place.name!)")
+                            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                            print(lat,long,radiusInKm * 100.0, place.name!)
+                            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                            self?.registerForRegionNotifications(region)
+                            regionsToBeRegistred.append(region)
+                        }
+                    } else if !regionsToBeRegistred.isEmpty {
+                        maximumDistInArray = dist
+                        self!.fetchBoundries(place.name!) {
+                            (latNortheast, lngNortheast, _, _) in
+                            let radiusInKm = self?.haversine(self!.currentLocationLat!, lon1: self!.currentLocationLng!, lat2: latNortheast, lon2: lngNortheast)
+                            
+                            let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude:
+                                lat, longitude: long), radius: radiusInKm! * 100.0, identifier: "\(place.name!)")
+                            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                            print(lat,long,radiusInKm! * 100.0, place.name!)
+                            print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                            self?.registerForRegionNotifications(region)
+                            regionsToBeRegistred.append(region)
+                        }
+                    }
                 } else {
-                    break
+                    maximumDistInArray = dist
+                    
+                    
+                    // here i should request "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=\(place.name!)" to know the boundries of a city (radius) note that you have  2500 request/day
+                    
+                    self!.fetchBoundries(place.name!) { (latNortheast, lngNortheast, _, _) in
+                        let radiusInKm = self!.haversine(self!.currentLocationLat!, lon1: self!.currentLocationLng!, lat2: latNortheast, lon2: lngNortheast)
+                        
+                        let region = CLCircularRegion(center: CLLocationCoordinate2D(latitude:
+                            lat, longitude: long), radius: radiusInKm * 100.0, identifier: "\(place.name!)")
+                        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                        print(lat,long,radiusInKm * 100.0, place.name!)
+                        print("++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+                        self?.registerForRegionNotifications(region)
+                        regionsToBeRegistred.append(region)
+                    }
                 }
-            } else {
-                maximumDistInArray = dist
                 
-                
-                // here i should request "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=\(place.name!)" to know the boundries of a city (radius) note that you have  2500 request/day
-                
-                let (latNortheast, lngNortheast, _, _) = fetchBoundries(place.name!)
-                let radiusInKm = haversine((currentLocation?.latitude)!, lon1: (currentLocation?.longitude)!, lat2: latNortheast!, lon2: lngNortheast!)
-                
-                let regoin = CLCircularRegion(center: CLLocationCoordinate2D(latitude:
-                    lat, longitude: long), radius: radiusInKm * 100.0, identifier: "\(place.name!)")
-                regionsToBeRegistred.append(regoin)
             }
             
+            //  testing values:
+            //        51.50998, -0.1337
+            //        lat:  31.3123825321504
+            //        long: 30.0638253624121
+            //        31.3124,30.0638
         }
-        
-        //  testing values:
-        //        51.50998, -0.1337
-        //        lat:  31.3123825321504
-        //        long: 30.0638253624121
-        //        31.3124,30.0638
-        
     }
     
-    func fetchBoundries(address: String) -> (Double?, Double?, Double?, Double?) {
-        
-        let googleGeocodeApiUrlWithQuery = "http://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=\(address)"
-        var latNortheast: Double?
-        var lngNortheast: Double?
-        var latSouthwest: Double?
-        var lngSouthwest: Double?
+    func fetchBoundries(address: String, completion: completionHandler) {
+        let encodedadress = address.stringByAddingPercentEncodingWithAllowedCharacters(NSCharacterSet.URLQueryAllowedCharacterSet())!
+        let googleGeocodeApiUrlWithQuery = "https://maps.googleapis.com/maps/api/geocode/json?sensor=false&address=\(encodedadress)"
         
         Alamofire.request(.GET, googleGeocodeApiUrlWithQuery)
             .responseJSON { [weak self] response in
@@ -397,13 +425,13 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
                         let northeast = bounds["northeast"] as! [String: AnyObject]
                         let southwest = bounds["southwest"] as! [String: AnyObject]
                         
-                        latNortheast = northeast["lat"] as? Double
-                        lngNortheast = northeast["lng"] as? Double
+                        let latNortheast = northeast["lat"] as? Double
+                        let lngNortheast = northeast["lng"] as? Double
                         
-                        latSouthwest = southwest["lat"] as? Double
-                        lngSouthwest = southwest["lng"] as? Double
+                        let latSouthwest = southwest["lat"] as? Double
+                        let lngSouthwest = southwest["lng"] as? Double
                         
-                        
+                        completion(latNortheast!, lngNortheast!, latSouthwest!, lngSouthwest!)
                         
                     } else {
                         print(String(data: response.data!, encoding: NSUTF8StringEncoding))
@@ -418,8 +446,6 @@ class WallViewController: UIViewController, UICollectionViewDelegate, UICollecti
                     self?.showErrorView(String(data: response.data!, encoding: NSUTF8StringEncoding))
                 }
         }
-        
-        return (latNortheast, lngNortheast, latSouthwest, lngSouthwest)
         
     }
     
@@ -481,7 +507,16 @@ extension WallViewController: CLLocationManagerDelegate {
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            print("current location: \(location)")
+            if let _ = currentLocationLat, let _ = currentLocationLng {
+                if !notificationsDidSet {
+                    setUpNotifications()
+                    // locationManager.stopUpdatingLocation()
+                    notificationsDidSet = true
+                    print("current location: \(location)")
+                }
+            }
+            self.currentLocationLat = location.coordinate.latitude
+            self.currentLocationLng = location.coordinate.longitude
         }
     }
     
