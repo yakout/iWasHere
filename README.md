@@ -1,5 +1,11 @@
 # iWasHere
-Screen Shots
+
+# Description:
+iOS applicaOon	that	takes	user	images,	clusters	them	according	to	their	locaOon	
+then	stores	them	on	a	server.	It	uses	the	device’s	GPS	and	noOfies	the	user	if	he	is	near	a	place	in	
+which	he	had	taken	an	image.	
+
+# Screen Shots
 
 ![alt tag](https://github.com/yakout/iWasHere/blob/master/ScreenShots/14348997_1273948372629738_1040912698_n.jpg)
 ![alt tag](https://github.com/yakout/iWasHere/blob/master/ScreenShots/Simulator%20Screen%20Shot%20Sep%2029%2C%202016%2C%2011.46.56%20AM.png)
