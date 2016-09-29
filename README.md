@@ -1,8 +1,8 @@
 # iWasHere
 
 # Description:
-iOS applicaOon	that	takes	user	images,	clusters	them	according	to	their	locaOon	
-then	stores	them	on	a	server.	It	uses	the	device’s	GPS	and	noOfies	the	user	if	he	is	near	a	place	in	
+iOS application that	takes	user	images,	clusters	them	according	to	their	location	
+then	stores	them	on	a	server.	It	uses	the	device’s	GPS	and	notfies	the	user	if	he	is	near	a	place	in	
 which	he	had	taken	an	image.	
 
 # Screen Shots
